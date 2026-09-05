@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Jill Valentine — Wallpapers</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #07131f;
+    color: white;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   ARCHIVE LOADING SCREEN
+========================= */
+
+#archiveLoader {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 10000;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #07131f;
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+#archiveLoader.hidden {
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+}
+
+.archive-loader-label {
+    color: #66899f;
+
+    font-size: 9px;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 18px;
+}
+
+.archive-loader-title {
+    color: #8ddcff;
+
+    font-size: 25px;
+
+    letter-spacing: 6px;
+
+    text-shadow:
+        0 0 15px rgba(100, 210, 255, .5),
+        0 0 35px rgba(70, 170, 230, .2);
+}
+
+.archive-loader-percentage {
+    margin-top: 20px;
+
+    color: #9bb8c8;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    min-width: 50px;
+
+    text-align: center;
+}
+
+.archive-loader-line {
+    width: 260px;
+
+    height: 1px;
+
+    margin-top: 20px;
+
+    background: #19384d;
+
+    overflow: hidden;
+}
+
+.archive-loader-progress {
+    width: 0;
+
+    height: 100%;
+
+    background: #8ddcff;
+
+    box-shadow:
+        0 0 12px rgba(100, 210, 255, .8);
+}
+
+.archive-loader-status {
+    margin-top: 16px;
+
+    color: #466174;
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back {
+    position: fixed;
+    top: 25px;
+    left: 30px;
+
+    color: #7895a8;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    letter-spacing: 3px;
+
+    z-index: 20;
+
+    transition: .3s;
+}
+
+.back:hover {
+    color: #8ddcff;
+}
+
+
+/* =========================
+   MUSIC BUTTON
+========================= */
+
+#musicButton {
+    position: fixed;
+
+    top: 20px;
+    right: 25px;
+
+    z-index: 50;
+
+    padding: 10px 15px;
+
+    background: rgba(7, 19, 31, .85);
+
+    border: 1px solid #23465d;
+
+    color: #7895a8;
+
+    font-family: "Trebuchet MS", Arial, sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition:
+        .3s ease;
+}
+
+#musicButton:hover {
+    color: #8ddcff;
+
+    border-color: #78d5ff;
+
+    box-shadow:
+        0 0 15px rgba(80, 190, 240, .2);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    text-align: center;
+
+    padding: 105px 20px 55px;
+
+    border-bottom: 1px solid #19384d;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(70, 150, 210, .13),
+            transparent 65%
+        );
+}
+
+.small-title {
+    color: #66899f;
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.jill-typewriter {
+    display: inline-block;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    width: 0;
+
+    border-right: 3px solid #8ddcff;
+
+    font-size: clamp(45px, 7vw, 80px);
+
+    letter-spacing: 5px;
+
+    color: #b9e8ff;
+
+    text-shadow:
+        0 0 10px rgba(100, 200, 255, .5),
+        0 0 25px rgba(70, 170, 230, .25);
+
+    animation:
+        jillTyping 5s steps(20, end) infinite,
+        cursorBlink .7s step-end infinite;
+}
+
+
+.subtitle {
+    color: #66899f;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    margin-top: 18px;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content {
+    width: 86%;
+
+    max-width: 1100px;
+
+    margin: 70px auto 100px;
+}
+
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.section-title {
+    display: inline-block;
+
+    color: #8ddcff;
+
+    font-size: 32px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 35px;
+
+    text-shadow:
+        0 0 8px rgba(100, 210, 255, .7);
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    border-right: 3px solid #8ddcff;
+
+    width: 0;
+
+    animation:
+        typingLoop 5s steps(10, end) infinite,
+        cursorBlink .7s step-end infinite;
+}
+
+
+/* =========================
+   WALLPAPERS
+========================= */
+
+.wallpaper-grid {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 35px;
+}
+
+
+/* =========================
+   WALLPAPER CARD
+========================= */
+
+.wallpaper {
+    position: relative;
+
+    overflow: hidden;
+
+    border: 1px solid #23465d;
+
+    background: #0b1824;
+
+    cursor: pointer;
+
+    animation:
+        appear .8s ease forwards;
+
+    transition:
+        transform .5s ease,
+        border-color .5s ease,
+        box-shadow .5s ease;
+}
+
+
+/* STAGGER */
+
+.wallpaper:nth-child(2) {
+    animation-delay: .15s;
+}
+
+.wallpaper:nth-child(3) {
+    animation-delay: .3s;
+}
+
+
+/* =========================
+   WALLPAPER IMAGE
+========================= */
+
+.wallpaper img {
+    width: 100%;
+
+    height: auto;
+
+    display: block;
+
+    transition:
+        transform .7s ease;
+}
+
+
+/* =========================
+   HOVER
+========================= */
+
+.wallpaper:hover {
+    transform: translateY(-8px);
+
+    border-color: #78d5ff;
+
+    box-shadow:
+        0 0 35px rgba(80, 190, 240, .25);
+}
+
+.wallpaper:hover img {
+    transform: scale(1.02);
+}
+
+
+/* =========================
+   NUMBER
+========================= */
+
+.wallpaper-number {
+    position: absolute;
+
+    left: 22px;
+    bottom: 20px;
+
+    z-index: 2;
+
+    color: #d6f3ff;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    text-shadow:
+        0 0 10px rgba(100, 210, 255, .7);
+}
+
+
+/* =========================
+   IMAGE VIEWER
+========================= */
+
+#imageViewer {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    background: rgba(0, 5, 10, .96);
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+
+    cursor: pointer;
+}
+
+
+#largeImage {
+    max-width: 92%;
+
+    max-height: 92%;
+
+    object-fit: contain;
+
+    border: 1px solid #23465d;
+
+    box-shadow:
+        0 0 40px rgba(90, 200, 255, .25);
+}
+
+
+.close-viewer {
+    position: absolute;
+
+    top: 25px;
+    right: 30px;
+
+    color: #7895a8;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    border-top: 1px solid #19384d;
+
+    text-align: center;
+
+    padding: 45px;
+
+    color: #466174;
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================
+   TYPEWRITER
+========================= */
+
+@keyframes jillTyping {
+
+    0% {
+        width: 0;
+    }
+
+    40% {
+        width: 100%;
+    }
+
+    60% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+
+}
+
+
+@keyframes typingLoop {
+
+    0% {
+        width: 0;
+    }
+
+    40% {
+        width: 100%;
+    }
+
+    60% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+
+}
+
+
+/* =========================
+   CURSOR
+========================= */
+
+@keyframes cursorBlink {
+
+    50% {
+        border-color: transparent;
+    }
+
+}
+
+
+/* =========================
+   APPEAR
+========================= */
+
+@keyframes appear {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    .content {
+        width: 92%;
+    }
+
+    .back {
+        left: 18px;
+    }
+
+    #musicButton {
+        right: 15px;
+        top: 18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     ARCHIVE LOADING SCREEN
+========================= -->
+
+<div id="archiveLoader">
+
+```
+<div class="archive-loader-label">
+    RESIDENT EVIL 3 REMAKE
+</div>
+
+<div class="archive-loader-title">
+    LOADING ARCHIVE
+</div>
+
+<div class="archive-loader-percentage">
+    <span id="loadingPercentage">0</span>%
+</div>
+
+<div class="archive-loader-line">
+
+    <div
+        class="archive-loader-progress"
+        id="archiveProgress"
+    ></div>
+
+</div>
+
+<div
+    class="archive-loader-status"
+    id="loadingStatus"
+>
+    INITIALIZING SYSTEM
+</div>
+```
+
+</div>
+
+<!-- =========================
+     BACK
+========================= -->
+
+<a
+href="jillre3.html"
+class="back"
+
+>
+
+```
+← BACK TO RE3
+```
+
+</a>
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio id="bgMusic" loop>
+
+```
+<source
+    src="music.mp3"
+    type="audio/mpeg"
+>
+```
+
+</audio>
+
+<button
+id="musicButton"
+onclick="toggleMusic()"
+
+>
+
+```
+♪ MUSIC: OFF
+```
+
+</button>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+```
+<div class="small-title">
+    RESIDENT EVIL 3 REMAKE
+</div>
+
+<h1 class="jill-typewriter">
+    JILL VALENTINE
+</h1>
+
+<div class="subtitle">
+    WALLPAPERS
+</div>
+```
+
+</header>
+
+<!-- =========================
+     CONTENT
+========================= -->
+
+<main class="content">
+
+```
+<h2 class="section-title">
+    WALLPAPERS
+</h2>
+
+
+<div class="wallpaper-grid">
+
+
+    <!-- WALLPAPER 01 -->
+
+    <div
+        class="wallpaper"
+        onclick="openImage('wallpapers/jillwallpaper1.jpg')"
+    >
+
+        <img
+            src="wallpapers/jillwallpaper1.jpg"
+            alt="Jill Valentine Wallpaper 1"
+        >
+
+        <div class="wallpaper-number">
+            01 / JILL VALENTINE
+        </div>
+
+    </div>
+
+
+    <!-- WALLPAPER 02 -->
+
+    <div
+        class="wallpaper"
+        onclick="openImage('wallpapers/jillwallpaper2.jpg')"
+    >
+
+        <img
+            src="wallpapers/jillwallpaper2.jpg"
+            alt="Jill Valentine Wallpaper 2"
+        >
+
+        <div class="wallpaper-number">
+            02 / JILL VALENTINE
+        </div>
+
+    </div>
+
+
+    <!-- WALLPAPER 03 -->
+
+    <div
+        class="wallpaper"
+        onclick="openImage('wallpapers/jillwallpaper3.jpg')"
+    >
+
+        <img
+            src="wallpapers/jillwallpaper3.jpg"
+            alt="Jill Valentine Wallpaper 3"
+        >
+
+        <div class="wallpaper-number">
+            03 / JILL VALENTINE
+        </div>
+
+    </div>
+
+
+</div>
+```
+
+</main>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+```
+BIOHAZARD: HEROINES —
+JILL VALENTINE / RE3 REMAKE
+```
+
+</footer>
+
+<!-- =========================
+     FULLSCREEN IMAGE VIEWER
+========================= -->
+
+<div
+    id="imageViewer"
+    onclick="closeImage()"
+>
+
+```
+<div class="close-viewer">
+    CLICK ANYWHERE TO CLOSE
+</div>
+
+<img
+    id="largeImage"
+    src=""
+    alt="Jill Valentine Wallpaper"
+>
+```
+
+</div>
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* =========================
+   MUSIC SYSTEM
+========================= */
+
+const music = document.getElementById("bgMusic");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+
+function toggleMusic() {
+
+    if (music.paused) {
+
+        music.play();
+
+        musicButton.textContent =
+            "♪ MUSIC: ON";
+
+    } else {
+
+        music.pause();
+
+        musicButton.textContent =
+            "♪ MUSIC: OFF";
+
+    }
+
+}
+
+
+/* =========================
+   IMAGE VIEWER
+========================= */
+
+function openImage(image) {
+
+    document.getElementById("largeImage").src = image;
+
+    document.getElementById("imageViewer").style.display = "flex";
+
+}
+
+
+function closeImage() {
+
+    document.getElementById("imageViewer").style.display = "none";
+
+    document.getElementById("largeImage").src = "";
+
+}
+
+
+/* =========================
+   ESCAPE TO CLOSE
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            closeImage();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   ARCHIVE LOADING SCREEN
+========================= */
+
+const archiveLoader =
+    document.getElementById(
+        "archiveLoader"
+    );
+
+const archiveProgress =
+    document.getElementById(
+        "archiveProgress"
+    );
+
+const loadingPercentage =
+    document.getElementById(
+        "loadingPercentage"
+    );
+
+const loadingStatus =
+    document.getElementById(
+        "loadingStatus"
+    );
+
+
+let loadingValue = 0;
+
+
+const loadingStatuses = [
+
+    {
+        percent: 15,
+        text: "INITIALIZING SYSTEM"
+    },
+
+    {
+        percent: 35,
+        text: "ACCESSING ARCHIVE"
+    },
+
+    {
+        percent: 55,
+        text: "LOADING WALLPAPERS"
+    },
+
+    {
+        percent: 75,
+        text: "VERIFYING DATA"
+    },
+
+    {
+        percent: 90,
+        text: "PREPARING ARCHIVE"
+    },
+
+    {
+        percent: 100,
+        text: "ARCHIVE READY"
+    }
+
+];
+
+
+const loadingInterval =
+    setInterval(function() {
+
+        loadingValue++;
+
+
+        loadingPercentage.textContent =
+            loadingValue;
+
+
+        archiveProgress.style.width =
+            loadingValue + "%";
+
+
+        for (
+            let i = loadingStatuses.length - 1;
+            i >= 0;
+            i--
+        ) {
+
+            if (
+                loadingValue >=
+                loadingStatuses[i].percent
+            ) {
+
+                loadingStatus.textContent =
+                    loadingStatuses[i].text;
+
+                break;
+
+            }
+
+        }
+
+
+        if (loadingValue >= 100) {
+
+            clearInterval(
+                loadingInterval
+            );
+
+
+            setTimeout(function() {
+
+                archiveLoader.classList.add(
+                    "hidden"
+                );
+
+            }, 450);
+
+        }
+
+    }, 25);
+
+
+</script>
+
+</body>
+
+</html>

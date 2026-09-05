@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Jill Valentine — Pictures</title>
+
+<style>
+
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #07131f;
+    color: white;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* =========================
+   ARCHIVE LOADING SCREEN
+========================= */
+
+#archiveLoader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: #07131f;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+#archiveLoader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.archive-loader-label {
+    color: #66899f;
+    font-size: 9px;
+    letter-spacing: 5px;
+    margin-bottom: 18px;
+}
+
+.archive-loader-title {
+    color: #8ddcff;
+    font-size: 25px;
+    letter-spacing: 6px;
+
+    text-shadow:
+        0 0 15px rgba(100, 210, 255, .5),
+        0 0 35px rgba(70, 170, 230, .2);
+}
+
+.archive-loader-percentage {
+    margin-top: 20px;
+
+    color: #9bb8c8;
+
+    font-size: 11px;
+    letter-spacing: 4px;
+
+    min-width: 50px;
+
+    text-align: center;
+}
+
+.archive-loader-line {
+    width: 260px;
+    height: 1px;
+
+    margin-top: 20px;
+
+    background: #19384d;
+
+    overflow: hidden;
+}
+
+.archive-loader-progress {
+    width: 0;
+    height: 100%;
+
+    background: #8ddcff;
+
+    box-shadow:
+        0 0 12px rgba(100, 210, 255, .8);
+}
+
+.archive-loader-status {
+    margin-top: 16px;
+
+    color: #466174;
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back {
+    position: fixed;
+
+    top: 25px;
+    left: 30px;
+
+    color: #7895a8;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    letter-spacing: 3px;
+
+    z-index: 1000;
+
+    transition:
+        color .3s ease,
+        text-shadow .3s ease;
+}
+
+.back:hover {
+    color: #8ddcff;
+
+    text-shadow:
+        0 0 12px rgba(100, 210, 255, .5);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    text-align: center;
+
+    padding: 105px 20px 55px;
+
+    border-bottom: 1px solid #19384d;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(70, 150, 210, .13),
+            transparent 65%
+        );
+}
+
+.small-title {
+    color: #66899f;
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.jill-typewriter {
+    display: inline-block;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    width: 0;
+
+    border-right: 3px solid #8ddcff;
+
+    font-size: clamp(45px, 7vw, 80px);
+
+    letter-spacing: 5px;
+
+    color: #b9e8ff;
+
+    text-shadow:
+        0 0 10px rgba(100, 200, 255, .5),
+        0 0 25px rgba(70, 170, 230, .25);
+
+    animation:
+        jillTyping 5s steps(20, end) infinite,
+        cursorBlink .7s step-end infinite;
+}
+
+
+.subtitle {
+    color: #66899f;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    margin-top: 18px;
+}
+
+
+/* =========================
+   MUSIC PLAYER
+========================= */
+
+.music-player {
+    position: fixed;
+
+    top: 20px;
+    right: 25px;
+
+    z-index: 2000;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 9px 12px;
+
+    background: rgba(5, 15, 23, .92);
+
+    border: 1px solid #23465d;
+
+    backdrop-filter: blur(8px);
+}
+
+.music-button {
+    background: transparent;
+
+    border: 1px solid #557b91;
+
+    color: #8ddcff;
+
+    padding: 7px 10px;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition:
+        background .3s ease,
+        border-color .3s ease,
+        color .3s ease,
+        box-shadow .3s ease;
+}
+
+.music-button:hover {
+    background: #65c9f5;
+
+    border-color: #65c9f5;
+
+    color: #06121b;
+
+    box-shadow:
+        0 0 18px rgba(100, 200, 255, .25);
+}
+
+.volume {
+    width: 75px;
+
+    accent-color: #65c9f5;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content {
+    width: 90%;
+
+    max-width: 1200px;
+
+    margin: 75px auto 110px;
+}
+
+
+/* =========================
+   SECTION HEADER
+========================= */
+
+.section-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    margin-bottom: 35px;
+}
+
+.section-title {
+    color: #8ddcff;
+
+    font-size: 32px;
+
+    letter-spacing: 4px;
+
+    text-shadow:
+        0 0 8px rgba(100, 210, 255, .7);
+}
+
+.section-subtitle {
+    color: #466174;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   MAIN GALLERY
+========================= */
+
+.gallery {
+    position: relative;
+
+    width: 100%;
+
+    max-width: 1150px;
+
+    margin: auto;
+}
+
+
+/* =========================
+   MAIN IMAGE FRAME
+========================= */
+
+.main-image-container {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    overflow: hidden;
+
+    background: #0b1824;
+
+    border: 1px solid #23465d;
+
+    box-shadow:
+        0 0 40px rgba(0, 0, 0, .45);
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   MAIN IMAGE
+========================= */
+
+#mainImage {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    object-position: center 25%;
+
+    opacity: 1;
+
+    transform: scale(1);
+
+    transition:
+        opacity .45s ease,
+        transform .8s cubic-bezier(.22, 1, .36, 1);
+}
+
+#mainImage.changing {
+    opacity: 0;
+
+    transform: scale(1.025);
+}
+
+
+/* =========================
+   CINEMATIC OVERLAY
+========================= */
+
+.main-image-container::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, .02) 20%,
+            rgba(0, 0, 0, .04) 50%,
+            rgba(0, 5, 10, .65) 100%
+        );
+}
+
+
+/* =========================
+   IMAGE LABEL
+========================= */
+
+.image-label {
+    position: absolute;
+
+    left: 25px;
+    bottom: 22px;
+
+    z-index: 5;
+
+    color: #b9e8ff;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    text-shadow:
+        0 0 10px rgba(100, 210, 255, .55);
+}
+
+
+/* =========================
+   IMAGE COUNTER
+========================= */
+
+.image-counter {
+    position: absolute;
+
+    right: 25px;
+    bottom: 22px;
+
+    z-index: 5;
+
+    color: #66899f;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+}
+
+.image-counter span {
+    color: #8ddcff;
+
+    text-shadow:
+        0 0 8px rgba(100, 210, 255, .6);
+}
+
+
+/* =========================
+   GALLERY ARROWS
+========================= */
+
+.gallery-arrow {
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 55px;
+    height: 55px;
+
+    z-index: 10;
+
+    border: 1px solid #557b91;
+
+    background: rgba(4, 13, 20, .78);
+
+    color: #b9e8ff;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transition:
+        background .3s ease,
+        border-color .3s ease,
+        color .3s ease,
+        box-shadow .3s ease,
+        transform .3s ease;
+}
+
+.gallery-arrow:hover {
+    background: #0b202d;
+
+    border-color: #8ddcff;
+
+    color: #8ddcff;
+
+    box-shadow:
+        0 0 25px rgba(80, 190, 240, .25);
+}
+
+.gallery-arrow.left {
+    left: 20px;
+}
+
+.gallery-arrow.right {
+    right: 20px;
+}
+
+
+/* =========================
+   THUMBNAILS
+========================= */
+
+.thumbnail-container {
+    margin-top: 22px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, 1fr);
+
+    gap: 12px;
+}
+
+
+/* =========================
+   THUMBNAIL
+========================= */
+
+.thumbnail {
+    position: relative;
+
+    height: 105px;
+
+    overflow: hidden;
+
+    border: 1px solid #23465d;
+
+    background: #0b1824;
+
+    cursor: pointer;
+
+    opacity: .55;
+
+    transition:
+        opacity .3s ease,
+        border-color .3s ease,
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    object-position: center 25%;
+
+    transition:
+        transform .5s ease,
+        filter .4s ease;
+}
+
+.thumbnail-number {
+    position: absolute;
+
+    left: 9px;
+    bottom: 8px;
+
+    z-index: 2;
+
+    color: white;
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 1px 6px black;
+}
+
+.thumbnail:hover {
+    opacity: .9;
+
+    border-color: #65c9f5;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 0 15px rgba(80, 190, 240, .15);
+}
+
+.thumbnail:hover img {
+    transform: scale(1.05);
+}
+
+.thumbnail.active {
+    opacity: 1;
+
+    border-color: #8ddcff;
+
+    box-shadow:
+        0 0 20px rgba(80, 190, 240, .2);
+}
+
+.thumbnail.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: #8ddcff;
+
+    box-shadow:
+        0 0 12px rgba(100, 210, 255, .7);
+}
+
+
+/* =========================
+   GALLERY FOOTER INFO
+========================= */
+
+.gallery-info {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 22px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #19384d;
+}
+
+.gallery-info-left {
+    color: #466174;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+}
+
+.gallery-info-right {
+    color: #66899f;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================
+   IMAGE VIEWER
+========================= */
+
+#imageViewer {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    background: rgba(0, 5, 10, .97);
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+
+    cursor: pointer;
+}
+
+#largeImage {
+    max-width: 92%;
+
+    max-height: 88%;
+
+    object-fit: contain;
+
+    border: 1px solid #23465d;
+
+    box-shadow:
+        0 0 45px rgba(80, 190, 240, .25);
+
+    cursor: default;
+}
+
+.close-viewer {
+    position: absolute;
+
+    top: 25px;
+    right: 30px;
+
+    color: #7895a8;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    border-top: 1px solid #19384d;
+
+    text-align: center;
+
+    padding: 45px;
+
+    color: #466174;
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes jillTyping {
+
+    0% {
+        width: 0;
+    }
+
+    40% {
+        width: 100%;
+    }
+
+    60% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+
+}
+
+@keyframes cursorBlink {
+
+    50% {
+        border-color: transparent;
+    }
+
+}
+
+@keyframes galleryAppear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+
+.gallery {
+    animation:
+        galleryAppear .9s ease forwards;
+}
+
+
+/* =========================
+   MOBILE / TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .content {
+        width: 92%;
+    }
+
+    .thumbnail {
+        height: 85px;
+    }
+
+    .gallery-arrow {
+        width: 48px;
+        height: 48px;
+
+        font-size: 22px;
+    }
+
+    .gallery-arrow.left {
+        left: 12px;
+    }
+
+    .gallery-arrow.right {
+        right: 12px;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .back {
+        top: 18px;
+        left: 18px;
+
+        font-size: 9px;
+    }
+
+    header {
+        padding:
+            90px 15px 45px;
+    }
+
+    .small-title {
+        font-size: 8px;
+
+        letter-spacing: 4px;
+    }
+
+    .jill-typewriter {
+        font-size: 40px;
+
+        letter-spacing: 3px;
+    }
+
+    .subtitle {
+        font-size: 8px;
+
+        letter-spacing: 3px;
+    }
+
+
+    .music-player {
+        top: auto;
+
+        bottom: 18px;
+        right: 18px;
+
+        padding: 7px 9px;
+    }
+
+    .volume {
+        width: 60px;
+    }
+
+
+    .content {
+        width: 94%;
+
+        margin:
+            55px auto 85px;
+    }
+
+
+    .section-header {
+        display: block;
+
+        margin-bottom: 25px;
+    }
+
+    .section-title {
+        font-size: 27px;
+    }
+
+    .section-subtitle {
+        margin-top: 8px;
+    }
+
+
+    .main-image-container {
+        aspect-ratio: 4 / 3;
+    }
+
+
+    .gallery-arrow {
+        width: 42px;
+        height: 42px;
+
+        font-size: 20px;
+    }
+
+    .gallery-arrow.left {
+        left: 8px;
+    }
+
+    .gallery-arrow.right {
+        right: 8px;
+    }
+
+
+    .image-label {
+        left: 15px;
+        bottom: 15px;
+
+        font-size: 8px;
+
+        letter-spacing: 2px;
+    }
+
+    .image-counter {
+        right: 15px;
+        bottom: 15px;
+
+        font-size: 8px;
+    }
+
+
+    .thumbnail-container {
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 8px;
+
+        margin-top: 15px;
+    }
+
+    .thumbnail {
+        height: 75px;
+    }
+
+
+    .gallery-info {
+        display: block;
+
+        line-height: 2;
+    }
+
+
+    .gallery-info-right {
+        margin-top: 4px;
+    }
+
+
+    #imageViewer {
+        padding: 15px;
+    }
+
+    #largeImage {
+        max-width: 96%;
+        max-height: 82%;
+    }
+
+    .close-viewer {
+        top: 20px;
+        right: 20px;
+
+        font-size: 8px;
+    }
+
+
+    footer {
+        padding:
+            35px 20px;
+
+        line-height: 2;
+    }
+
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .gallery,
+    .jill-typewriter {
+        animation: none;
+    }
+
+    #mainImage,
+    .thumbnail,
+    .gallery-arrow {
+        transition: none;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     ARCHIVE LOADING SCREEN
+========================= -->
+
+<div id="archiveLoader">
+
+```
+<div class="archive-loader-label">
+    RESIDENT EVIL 3 REMAKE
+</div>
+
+<div class="archive-loader-title">
+    LOADING ARCHIVE
+</div>
+
+<div class="archive-loader-percentage">
+    <span id="loadingPercentage">0</span>%
+</div>
+
+<div class="archive-loader-line">
+
+    <div
+        class="archive-loader-progress"
+        id="archiveProgress">
+    </div>
+
+</div>
+
+<div
+    class="archive-loader-status"
+    id="loadingStatus"
+>
+    INITIALIZING SYSTEM
+</div>
+```
+
+</div>
+
+<!-- =========================
+     BACK
+========================= -->
+
+<a
+href="jillre3.html"
+class="back"
+
+>
+
+```
+← BACK TO RE3
+```
+
+</a>
+
+<!-- =========================
+     MUSIC PLAYER
+========================= -->
+
+<div class="music-player">
+
+```
+<button
+    class="music-button"
+    id="musicButton"
+    onclick="toggleMusic()"
+>
+    ▶ MUSIC
+</button>
+
+<input
+    class="volume"
+    id="volumeControl"
+    type="range"
+    min="0"
+    max="1"
+    step="0.01"
+    value="0.5"
+>
+```
+
+</div>
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio
+id="backgroundMusic"
+loop
+preload="auto"
+
+>
+
+```
+<source
+    src="music.mp3"
+    type="audio/mpeg"
+>
+```
+
+</audio>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+```
+<div class="small-title">
+    RESIDENT EVIL 3 REMAKE
+</div>
+
+<h1 class="jill-typewriter">
+    JILL VALENTINE
+</h1>
+
+<div class="subtitle">
+    PICTURES / IMAGE ARCHIVE
+</div>
+```
+
+</header>
+
+<!-- =========================
+     CONTENT
+========================= -->
+
+<main class="content">
+
+```
+<div class="section-header">
+
+    <h2 class="section-title">
+        PICTURES
+    </h2>
+
+    <div class="section-subtitle">
+        JILL VALENTINE / RE3 REMAKE
+    </div>
+
+</div>
+
+
+<!-- =========================
+     GALLERY
+========================= -->
+
+<div class="gallery">
+
+
+    <!-- MAIN IMAGE -->
+
+    <div
+        class="main-image-container"
+        onclick="openCurrentImage()"
+    >
+
+        <img
+            id="mainImage"
+            src="jill%20pictures/jill1.jpg"
+            alt="Jill Valentine"
+        >
+
+
+        <!-- IMAGE LABEL -->
+
+        <div
+            class="image-label"
+            id="imageLabel"
+        >
+            01 / JILL VALENTINE
+        </div>
+
+
+        <!-- IMAGE COUNTER -->
+
+        <div class="image-counter">
+
+            <span id="currentImage">
+                01
+            </span>
+
+            / 06
+
+        </div>
+
+
+        <!-- LEFT -->
+
+        <button
+            class="gallery-arrow left"
+            type="button"
+            aria-label="Previous image"
+            onclick="event.stopPropagation(); previousImage()"
+        >
+            ←
+        </button>
+
+
+        <!-- RIGHT -->
+
+        <button
+            class="gallery-arrow right"
+            type="button"
+            aria-label="Next image"
+            onclick="event.stopPropagation(); nextImage()"
+        >
+            →
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         THUMBNAILS
+    ========================= -->
+
+    <div class="thumbnail-container">
+
+
+        <!-- 01 -->
+
+        <button
+            class="thumbnail active"
+            type="button"
+            onclick="showImage(0)"
+            aria-label="View Jill image 1"
+        >
+
+            <img
+                src="jill%20pictures/jill1.jpg"
+                alt="Jill image 1"
+            >
+
+            <span class="thumbnail-number">
+                01
+            </span>
+
+        </button>
+
+
+        <!-- 02 -->
+
+        <button
+            class="thumbnail"
+            type="button"
+            onclick="showImage(1)"
+            aria-label="View Jill image 2"
+        >
+
+            <img
+                src="jill%20pictures/jill2.jpg"
+                alt="Jill image 2"
+            >
+
+            <span class="thumbnail-number">
+                02
+            </span>
+
+        </button>
+
+
+        <!-- 03 -->
+
+        <button
+            class="thumbnail"
+            type="button"
+            onclick="showImage(2)"
+            aria-label="View Jill image 3"
+        >
+
+            <img
+                src="jill%20pictures/jill3.jpg"
+                alt="Jill image 3"
+            >
+
+            <span class="thumbnail-number">
+                03
+            </span>
+
+        </button>
+
+
+        <!-- 04 -->
+
+        <button
+            class="thumbnail"
+            type="button"
+            onclick="showImage(3)"
+            aria-label="View Jill image 4"
+        >
+
+            <img
+                src="jill%20pictures/jill4.jpg"
+                alt="Jill image 4"
+            >
+
+            <span class="thumbnail-number">
+                04
+            </span>
+
+        </button>
+
+
+        <!-- 05 -->
+
+        <button
+            class="thumbnail"
+            type="button"
+            onclick="showImage(4)"
+            aria-label="View Jill image 5"
+        >
+
+            <img
+                src="jill%20pictures/jill5.jpg"
+                alt="Jill image 5"
+            >
+
+            <span class="thumbnail-number">
+                05
+            </span>
+
+        </button>
+
+
+        <!-- 06 -->
+
+        <button
+            class="thumbnail"
+            type="button"
+            onclick="showImage(5)"
+            aria-label="View Jill image 6"
+        >
+
+            <img
+                src="jill%20pictures/jill6.jpg"
+                alt="Jill image 6"
+            >
+
+            <span class="thumbnail-number">
+                06
+            </span>
+
+        </button>
+
+
+    </div>
+
+
+    <!-- =========================
+         GALLERY INFO
+    ========================= -->
+
+    <div class="gallery-info">
+
+        <div class="gallery-info-left">
+            IMAGE ARCHIVE / 06 FILES
+        </div>
+
+        <div class="gallery-info-right">
+            CLICK IMAGE TO VIEW FULLSCREEN
+        </div>
+
+    </div>
+
+
+</div>
+```
+
+</main>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+```
+BIOHAZARD: HEROINES —
+JILL VALENTINE / RE3 REMAKE
+```
+
+</footer>
+
+<!-- =========================
+     IMAGE VIEWER
+========================= -->
+
+<div
+    id="imageViewer"
+    onclick="closeImage()"
+>
+
+```
+<div class="close-viewer">
+    CLICK ANYWHERE TO CLOSE
+</div>
+
+<img
+    id="largeImage"
+    src=""
+    alt="Jill Valentine Fullscreen"
+    onclick="event.stopPropagation()"
+>
+```
+
+</div>
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* =========================
+   IMAGE DATA
+========================= */
+
+const images = [
+
+    "jill%20pictures/jill1.jpg",
+
+    "jill%20pictures/jill2.jpg",
+
+    "jill%20pictures/jill3.jpg",
+
+    "jill%20pictures/jill4.jpg",
+
+    "jill%20pictures/jill5.jpg",
+
+    "jill%20pictures/jill6.jpg"
+
+];
+
+
+const imageNames = [
+
+    "01 / JILL VALENTINE",
+
+    "02 / JILL VALENTINE",
+
+    "03 / JILL VALENTINE",
+
+    "04 / JILL VALENTINE",
+
+    "05 / JILL VALENTINE",
+
+    "06 / JILL VALENTINE"
+
+];
+
+
+let currentIndex = 0;
+
+
+/* =========================
+   SHOW IMAGE
+========================= */
+
+function showImage(index) {
+
+    if (index < 0) {
+        index = images.length - 1;
+    }
+
+    if (index >= images.length) {
+        index = 0;
+    }
+
+
+    const mainImage =
+        document.getElementById("mainImage");
+
+
+    mainImage.classList.add("changing");
+
+
+    setTimeout(function() {
+
+        currentIndex = index;
+
+
+        mainImage.src =
+            images[currentIndex];
+
+
+        document.getElementById(
+            "currentImage"
+        ).textContent =
+            String(currentIndex + 1)
+            .padStart(2, "0");
+
+
+        document.getElementById(
+            "imageLabel"
+        ).textContent =
+            imageNames[currentIndex];
+
+
+        const thumbnails =
+            document.querySelectorAll(
+                ".thumbnail"
+            );
+
+
+        thumbnails.forEach(
+            function(thumbnail, i) {
+
+                thumbnail.classList.toggle(
+                    "active",
+                    i === currentIndex
+                );
+
+            }
+        );
+
+
+        mainImage.onload = function() {
+
+            mainImage.classList.remove(
+                "changing"
+            );
+
+        };
+
+
+        setTimeout(function() {
+
+            mainImage.classList.remove(
+                "changing"
+            );
+
+        }, 100);
+
+
+    }, 220);
+
+}
+
+
+/* =========================
+   NEXT
+========================= */
+
+function nextImage() {
+
+    showImage(
+        currentIndex + 1
+    );
+
+}
+
+
+/* =========================
+   PREVIOUS
+========================= */
+
+function previousImage() {
+
+    showImage(
+        currentIndex - 1
+    );
+
+}
+
+
+/* =========================
+   FULLSCREEN VIEWER
+========================= */
+
+let imageViewerOpen = false;
+
+
+function openCurrentImage() {
+
+    const image =
+        images[currentIndex];
+
+
+    document.getElementById(
+        "largeImage"
+    ).src = image;
+
+
+    document.getElementById(
+        "imageViewer"
+    ).style.display = "flex";
+
+
+    imageViewerOpen = true;
+
+
+    history.pushState(
+        {
+            imageViewer: true
+        },
+        "",
+        window.location.href
+    );
+
+}
+
+
+function closeImage(
+    fromBrowserBack = false
+) {
+
+    document.getElementById(
+        "imageViewer"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "largeImage"
+    ).src = "";
+
+
+    if (imageViewerOpen) {
+
+        imageViewerOpen = false;
+
+
+        if (!fromBrowserBack) {
+
+            history.back();
+
+        }
+
+    }
+
+}
+
+
+/* =========================
+   CHROME BACK BUTTON
+========================= */
+
+window.addEventListener(
+    "popstate",
+    function() {
+
+        if (imageViewerOpen) {
+
+            closeImage(true);
+
+        }
+
+    }
+);
+
+
+/* =========================
+   ESCAPE KEY
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape" &&
+            imageViewerOpen
+        ) {
+
+            closeImage();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   KEYBOARD GALLERY CONTROLS
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (imageViewerOpen) {
+            return;
+        }
+
+
+        if (event.key === "ArrowRight") {
+
+            nextImage();
+
+        }
+
+
+        if (event.key === "ArrowLeft") {
+
+            previousImage();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   MUSIC SYSTEM
+========================= */
+
+const music =
+    document.getElementById(
+        "backgroundMusic"
+    );
+
+const musicButton =
+    document.getElementById(
+        "musicButton"
+    );
+
+const volumeControl =
+    document.getElementById(
+        "volumeControl"
+    );
+
+
+music.volume = 0.5;
+
+
+/* =========================
+   PLAY / PAUSE
+========================= */
+
+function toggleMusic() {
+
+    if (music.paused) {
+
+        music.play()
+
+            .then(function() {
+
+                musicButton.textContent =
+                    "❚❚ MUSIC";
+
+            })
+
+            .catch(function() {
+
+                alert(
+                    "Music file could not be played. Make sure music.mp3 is beside this HTML file."
+                );
+
+            });
+
+    }
+
+    else {
+
+        music.pause();
+
+        musicButton.textContent =
+            "▶ MUSIC";
+
+    }
+
+}
+
+
+/* =========================
+   VOLUME
+========================= */
+
+volumeControl.addEventListener(
+    "input",
+    function() {
+
+        music.volume =
+            this.value;
+
+    }
+);
+
+
+/* =========================
+   MUSIC BUTTON STATE
+========================= */
+
+music.addEventListener(
+    "play",
+    function() {
+
+        musicButton.textContent =
+            "❚❚ MUSIC";
+
+    }
+);
+
+
+music.addEventListener(
+    "pause",
+    function() {
+
+        musicButton.textContent =
+            "▶ MUSIC";
+
+    }
+);
+
+
+/* =========================
+   PRELOAD IMAGES
+========================= */
+
+images.forEach(
+    function(image) {
+
+        const preload =
+            new Image();
+
+        preload.src = image;
+
+    }
+);
+
+
+/* =========================
+   ARCHIVE LOADING SCREEN
+========================= */
+
+const archiveLoader =
+    document.getElementById(
+        "archiveLoader"
+    );
+
+const archiveProgress =
+    document.getElementById(
+        "archiveProgress"
+    );
+
+const loadingPercentage =
+    document.getElementById(
+        "loadingPercentage"
+    );
+
+const loadingStatus =
+    document.getElementById(
+        "loadingStatus"
+    );
+
+
+let loadingValue = 0;
+
+
+const loadingStatuses = [
+
+    {
+        percent: 15,
+        text: "INITIALIZING SYSTEM"
+    },
+
+    {
+        percent: 35,
+        text: "ACCESSING ARCHIVE"
+    },
+
+    {
+        percent: 55,
+        text: "LOADING VISUAL FILES"
+    },
+
+    {
+        percent: 75,
+        text: "VERIFYING DATA"
+    },
+
+    {
+        percent: 90,
+        text: "PREPARING ARCHIVE"
+    },
+
+    {
+        percent: 100,
+        text: "ARCHIVE READY"
+    }
+
+];
+
+
+const loadingInterval =
+    setInterval(function() {
+
+        loadingValue++;
+
+
+        loadingPercentage.textContent =
+            loadingValue;
+
+
+        archiveProgress.style.width =
+            loadingValue + "%";
+
+
+        for (
+            let i = loadingStatuses.length - 1;
+            i >= 0;
+            i--
+        ) {
+
+            if (
+                loadingValue >=
+                loadingStatuses[i].percent
+            ) {
+
+                loadingStatus.textContent =
+                    loadingStatuses[i].text;
+
+                break;
+
+            }
+
+        }
+
+
+        if (loadingValue >= 100) {
+
+            clearInterval(
+                loadingInterval
+            );
+
+
+            setTimeout(function() {
+
+                archiveLoader.classList.add(
+                    "hidden"
+                );
+
+            }, 450);
+
+        }
+
+    }, 25);
+
+
+/* =========================
+   INITIAL IMAGE
+========================= */
+
+showImage(0);
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ada Wong | RE4 Remake Wallpapers</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #050505;
+    color: white;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   ARCHIVE LOADING SCREEN
+========================= */
+
+#archiveLoader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: #050505;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+#archiveLoader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.archive-loader-label {
+    color: #666;
+    font-size: 9px;
+    letter-spacing: 5px;
+    margin-bottom: 18px;
+}
+
+.archive-loader-title {
+    color: #d71920;
+    font-size: 25px;
+    letter-spacing: 6px;
+
+    text-shadow:
+        0 0 15px rgba(215,25,32,.5),
+        0 0 35px rgba(215,25,32,.2);
+}
+
+.archive-loader-percentage {
+    margin-top: 20px;
+    color: #aaa;
+    font-size: 11px;
+    letter-spacing: 4px;
+    min-width: 50px;
+    text-align: center;
+}
+
+.archive-loader-line {
+    width: 260px;
+    height: 1px;
+    margin-top: 20px;
+
+    background: #292929;
+
+    overflow: hidden;
+}
+
+.archive-loader-progress {
+    width: 0;
+    height: 100%;
+
+    background: #d71920;
+
+    box-shadow:
+        0 0 12px rgba(215,25,32,.8);
+}
+
+.archive-loader-status {
+    margin-top: 16px;
+
+    color: #444;
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   MUSIC BUTTON
+========================= */
+
+.music-button {
+
+    position: fixed;
+
+    top: 25px;
+    right: 30px;
+
+    z-index: 9999;
+
+    background: rgba(0,0,0,.75);
+
+    color: #aaa;
+
+    border: 1px solid #333;
+
+    padding: 12px 18px;
+
+    font-family:
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+
+    box-shadow:
+        0 0 15px rgba(0,0,0,.5);
+}
+
+.music-button:hover {
+
+    color: white;
+
+    border-color: #d71920;
+
+    background: #120608;
+
+    box-shadow:
+        0 0 20px rgba(215,25,32,.35);
+}
+
+.music-button.playing {
+
+    color: #d71920;
+
+    border-color: #d71920;
+
+    text-shadow:
+        0 0 10px rgba(215,25,32,.7);
+
+    box-shadow:
+        0 0 20px rgba(215,25,32,.25);
+}
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back {
+
+    position: fixed;
+
+    top: 25px;
+    left: 30px;
+
+    color: #777;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    z-index: 20;
+
+    transition: .3s;
+}
+
+.back:hover {
+
+    color: #d71920;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+
+    text-align: center;
+
+    padding: 105px 20px 55px;
+
+    border-bottom: 1px solid #242424;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(130, 0, 15, .17),
+            transparent 65%
+        );
+}
+
+.small-title {
+
+    color: #777;
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================
+   CONTINUOUS TYPEWRITER
+========================= */
+
+h1 {
+
+    display: inline-block;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    width: 0;
+
+    border-right: 3px solid #d71920;
+
+    font-size: clamp(40px, 6vw, 70px);
+
+    letter-spacing: 5px;
+
+    color: #d71920;
+
+    text-shadow:
+        0 0 10px rgba(215,25,32,.5);
+
+    animation:
+        typing 5s steps(18, end) infinite,
+        cursorBlink .7s step-end infinite;
+}
+
+.subtitle {
+
+    color: #777;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    margin-top: 18px;
+}
+
+
+/* =========================
+   WALLPAPER ARCHIVE
+========================= */
+
+.wallpaper-archive {
+
+    width: 88%;
+
+    max-width: 1200px;
+
+    margin: 65px auto 100px;
+}
+
+
+/* =========================
+   WALLPAPER
+========================= */
+
+.wallpaper {
+
+    width: 100%;
+
+    background: #090909;
+
+    border: 1px solid #292929;
+
+    margin-bottom: 35px;
+
+    overflow: hidden;
+
+    transition:
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+.wallpaper:hover {
+
+    border-color: #444;
+
+    box-shadow:
+        0 0 25px rgba(0,0,0,.5);
+}
+
+.wallpaper img {
+
+    width: 100%;
+
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+
+    transition:
+        transform .5s ease,
+        opacity .3s ease;
+}
+
+.wallpaper:hover img {
+
+    transform: scale(1.015);
+
+    opacity: .92;
+}
+
+
+/* =========================
+   WALLPAPER INFO
+========================= */
+
+.wallpaper-info {
+
+    padding: 18px 20px 20px;
+
+    border-top: 1px solid #1f1f1f;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.wallpaper-title {
+
+    color: #777;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+}
+
+.wallpaper-number {
+
+    color: #d71920;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+
+    border-top: 1px solid #1c1c1c;
+
+    text-align: center;
+
+    padding: 45px;
+
+    color: #444;
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================
+   TYPEWRITER
+========================= */
+
+@keyframes typing {
+
+    0% {
+        width: 0;
+    }
+
+    40% {
+        width: 100%;
+    }
+
+    60% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+
+}
+
+
+/* =========================
+   CURSOR
+========================= */
+
+@keyframes cursorBlink {
+
+    50% {
+        border-color: transparent;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .wallpaper-archive {
+
+        width: 92%;
+    }
+
+    .music-button {
+
+        top: 15px;
+
+        right: 15px;
+
+        padding: 10px 12px;
+
+        font-size: 8px;
+    }
+
+    .back {
+
+        top: 18px;
+
+        left: 18px;
+
+        font-size: 9px;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .music-button {
+
+        top: 55px;
+
+        right: 15px;
+    }
+
+    header {
+
+        padding-top: 120px;
+    }
+
+    .wallpaper {
+
+        margin-bottom: 25px;
+    }
+
+    .wallpaper-info {
+
+        padding: 14px 15px 16px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     ARCHIVE LOADING SCREEN
+========================= -->
+
+<div id="archiveLoader">
+
+    <div class="archive-loader-label">
+        RESIDENT EVIL 4 REMAKE
+    </div>
+
+    <div class="archive-loader-title">
+        LOADING ARCHIVE
+    </div>
+
+    <div class="archive-loader-percentage">
+
+        <span id="loadingPercentage">0</span>%
+
+    </div>
+
+    <div class="archive-loader-line">
+
+        <div
+            class="archive-loader-progress"
+            id="archiveProgress">
+        </div>
+
+    </div>
+
+    <div
+        class="archive-loader-status"
+        id="loadingStatus">
+
+        INITIALIZING SYSTEM
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio
+    id="backgroundMusic"
+    src="../music.mp3"
+    loop
+    preload="auto">
+</audio>
+
+
+<button
+    id="musicButton"
+    class="music-button"
+    onclick="toggleMusic()"
+>
+    ♪ MUSIC OFF
+</button>
+
+
+<!-- =========================
+     BACK BUTTON
+========================= -->
+
+<a
+    href="../adare4.html"
+    class="back"
+>
+    ← BACK TO RE4
+</a>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="small-title">
+        RESIDENT EVIL 4 REMAKE
+    </div>
+
+    <h1>
+        ADA WONG
+    </h1>
+
+    <div class="subtitle">
+        WALLPAPERS
+    </div>
+
+</header>
+
+
+<!-- =========================
+     WALLPAPER ARCHIVE
+========================= -->
+
+<main class="wallpaper-archive">
+
+
+    <!-- =========================
+         WALLPAPER 01
+    ========================= -->
+
+    <div class="wallpaper">
+
+        <img
+            src="Resident%20Evil%204%20Remake%20Wallpaper.jpg"
+            alt="Resident Evil 4 Remake Wallpaper"
+        >
+
+        <div class="wallpaper-info">
+
+            <div class="wallpaper-title">
+                ADA WONG / RE4 REMAKE
+            </div>
+
+            <div class="wallpaper-number">
+                01 / 03
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         WALLPAPER 02
+    ========================= -->
+
+    <div class="wallpaper">
+
+        <img
+            src="Resident%20Evil%204%20PS4%20e%20PS5.jpg"
+            alt="Resident Evil 4 PS4 and PS5 Wallpaper"
+        >
+
+        <div class="wallpaper-info">
+
+            <div class="wallpaper-title">
+                ADA WONG / RE4 REMAKE
+            </div>
+
+            <div class="wallpaper-number">
+                02 / 03
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         WALLPAPER 03
+    ========================= -->
+
+    <div class="wallpaper">
+
+        <img
+            src="Ada%20Wong%20Separate%20Ways%20Cover.jpg"
+            alt="Ada Wong Separate Ways Cover"
+        >
+
+        <div class="wallpaper-info">
+
+            <div class="wallpaper-title">
+                ADA WONG / SEPARATE WAYS
+            </div>
+
+            <div class="wallpaper-number">
+                03 / 03
+            </div>
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    BIOHAZARD: HEROINES — ADA WONG / RE4 REMAKE
+
+</footer>
+
+
+<script>
+
+
+/* =========================
+   LOADING SCREEN
+========================= */
+
+const archiveLoader =
+    document.getElementById(
+        "archiveLoader"
+    );
+
+
+const archiveProgress =
+    document.getElementById(
+        "archiveProgress"
+    );
+
+
+const loadingPercentage =
+    document.getElementById(
+        "loadingPercentage"
+    );
+
+
+const loadingStatus =
+    document.getElementById(
+        "loadingStatus"
+    );
+
+
+let loadingValue = 0;
+
+
+const loadingStatuses = [
+
+    {
+        percent: 15,
+        text: "INITIALIZING SYSTEM"
+    },
+
+    {
+        percent: 35,
+        text: "ACCESSING ARCHIVE"
+    },
+
+    {
+        percent: 55,
+        text: "LOADING WALLPAPERS"
+    },
+
+    {
+        percent: 75,
+        text: "VERIFYING DATA"
+    },
+
+    {
+        percent: 90,
+        text: "PREPARING ARCHIVE"
+    },
+
+    {
+        percent: 100,
+        text: "ARCHIVE READY"
+    }
+
+];
+
+
+const loadingInterval =
+    setInterval(function() {
+
+        loadingValue++;
+
+        loadingPercentage.textContent =
+            loadingValue;
+
+        archiveProgress.style.width =
+            loadingValue + "%";
+
+
+        for (
+            let i = loadingStatuses.length - 1;
+            i >= 0;
+            i--
+        ) {
+
+            if (
+                loadingValue >=
+                loadingStatuses[i].percent
+            ) {
+
+                loadingStatus.textContent =
+                    loadingStatuses[i].text;
+
+                break;
+
+            }
+
+        }
+
+
+        if (loadingValue >= 100) {
+
+            clearInterval(
+                loadingInterval
+            );
+
+
+            setTimeout(function() {
+
+                archiveLoader.classList.add(
+                    "hidden"
+                );
+
+            }, 450);
+
+        }
+
+    }, 25);
+
+
+/* =========================
+   MUSIC SYSTEM
+========================= */
+
+const music =
+    document.getElementById(
+        "backgroundMusic"
+    );
+
+
+const musicButton =
+    document.getElementById(
+        "musicButton"
+    );
+
+
+/* =========================
+   SAVED STATE
+========================= */
+
+const savedTime =
+    localStorage.getItem(
+        "musicTime"
+    );
+
+
+const savedState =
+    localStorage.getItem(
+        "musicPlaying"
+    );
+
+
+/* =========================
+   RESTORE MUSIC POSITION
+========================= */
+
+if (savedTime !== null) {
+
+    music.addEventListener(
+        "loadedmetadata",
+        function() {
+
+            try {
+
+                music.currentTime =
+                    parseFloat(savedTime);
+
+            } catch (error) {}
+
+        },
+        { once: true }
+    );
+
+}
+
+
+/* =========================
+   UPDATE MUSIC BUTTON
+========================= */
+
+function updateMusicButton() {
+
+    if (!music.paused) {
+
+        musicButton.textContent =
+            "♪ MUSIC ON";
+
+        musicButton.classList.add(
+            "playing"
+        );
+
+    } else {
+
+        musicButton.textContent =
+            "♪ MUSIC OFF";
+
+        musicButton.classList.remove(
+            "playing"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   START MUSIC
+========================= */
+
+function startMusic() {
+
+    music.play()
+        .then(function() {
+
+            localStorage.setItem(
+                "musicPlaying",
+                "true"
+            );
+
+            updateMusicButton();
+
+        })
+        .catch(function() {});
+
+}
+
+
+/* =========================
+   TOGGLE MUSIC
+========================= */
+
+function toggleMusic() {
+
+    if (music.paused) {
+
+        startMusic();
+
+    } else {
+
+        music.pause();
+
+        localStorage.setItem(
+            "musicPlaying",
+            "false"
+        );
+
+        updateMusicButton();
+
+    }
+
+}
+
+
+/* =========================
+   SAVE MUSIC POSITION
+========================= */
+
+setInterval(function() {
+
+    if (!music.paused) {
+
+        localStorage.setItem(
+            "musicTime",
+            music.currentTime
+        );
+
+    }
+
+}, 1000);
+
+
+/* =========================
+   SAVE BEFORE LEAVING
+========================= */
+
+window.addEventListener(
+    "beforeunload",
+    function() {
+
+        localStorage.setItem(
+            "musicTime",
+            music.currentTime
+        );
+
+        localStorage.setItem(
+            "musicPlaying",
+            music.paused
+                ? "false"
+                : "true"
+        );
+
+    }
+);
+
+
+/* =========================
+   CONTINUE MUSIC
+========================= */
+
+if (savedState === "true") {
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            startMusic();
+
+        }
+    );
+
+}
+
+
+/* =========================
+   FIRST CLICK FALLBACK
+========================= */
+
+document.addEventListener(
+    "click",
+    function() {
+
+        if (
+            savedState === "true" &&
+            music.paused
+        ) {
+
+            startMusic();
+
+        }
+
+    },
+    { once: true }
+);
+
+
+updateMusicButton();
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Jill Valentine — Model Viewer</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #07131f;
+    color: white;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   ARCHIVE LOADING SCREEN
+========================= */
+
+#archiveLoader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: #050505;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+#archiveLoader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.archive-loader-label {
+    color: #666;
+    font-size: 9px;
+    letter-spacing: 5px;
+    margin-bottom: 18px;
+}
+
+.archive-loader-title {
+    color: #8ddcff;
+    font-size: 25px;
+    letter-spacing: 6px;
+
+    text-shadow:
+        0 0 15px rgba(100,200,255,.5),
+        0 0 35px rgba(70,170,230,.2);
+}
+
+.archive-loader-percentage {
+    margin-top: 20px;
+    color: #aaa;
+    font-size: 11px;
+    letter-spacing: 4px;
+    min-width: 50px;
+    text-align: center;
+}
+
+.archive-loader-line {
+    width: 260px;
+    height: 1px;
+    margin-top: 20px;
+
+    background: #292929;
+
+    overflow: hidden;
+}
+
+.archive-loader-progress {
+    width: 0;
+    height: 100%;
+
+    background: #8ddcff;
+
+    box-shadow:
+        0 0 12px rgba(100,200,255,.8);
+}
+
+.archive-loader-status {
+    margin-top: 16px;
+
+    color: #444;
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back {
+    position: fixed;
+    top: 25px;
+    left: 30px;
+    color: #7895a8;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 3px;
+    z-index: 20;
+    transition: .3s;
+}
+
+.back:hover {
+    color: #8ddcff;
+}
+
+
+/* =========================
+   MUSIC BUTTON
+========================= */
+
+.music-button {
+    position: fixed;
+    top: 22px;
+    right: 25px;
+    z-index: 20;
+    background: #07131f;
+    color: #7895a8;
+    border: 1px solid #23465d;
+    padding: 10px 15px;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.music-button:hover {
+    color: #8ddcff;
+    border-color: #78d5ff;
+    box-shadow: 0 0 15px rgba(80,190,240,.25);
+}
+
+.music-button.active {
+    color: #8ddcff;
+    border-color: #78d5ff;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    text-align: center;
+    padding: 105px 20px 55px;
+    border-bottom: 1px solid #19384d;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(70,150,210,.13),
+            transparent 65%
+        );
+}
+
+.small-title {
+    color: #66899f;
+    font-size: 10px;
+    letter-spacing: 6px;
+    margin-bottom: 18px;
+}
+
+
+/* =========================
+   CONTINUOUS TYPEWRITER
+========================= */
+
+h1 {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+
+    border-right: 3px solid #8ddcff;
+
+    font-size: clamp(45px, 7vw, 80px);
+    letter-spacing: 5px;
+    color: #b9e8ff;
+
+    text-shadow:
+        0 0 10px rgba(100,200,255,.5),
+        0 0 25px rgba(70,170,230,.25);
+
+    animation:
+        jillTyping 5s steps(20, end) infinite,
+        cursorBlink .7s step-end infinite;
+}
+
+.subtitle {
+    color: #66899f;
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-top: 18px;
+}
+
+.credit {
+    color: #6fc8f5;
+    margin-top: 14px;
+    font-size: 10px;
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 8px rgba(100,210,255,.4);
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content {
+    width: 86%;
+    max-width: 1100px;
+    margin: 70px auto 100px;
+}
+
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.section-title {
+    color: #8ddcff;
+    font-size: 32px;
+    letter-spacing: 4px;
+    margin-bottom: 35px;
+
+    text-shadow:
+        0 0 8px rgba(100,210,255,.7);
+
+    white-space: nowrap;
+    overflow: hidden;
+
+    border-right: 3px solid #8ddcff;
+    width: 0;
+
+    animation:
+        typingLoop 5s steps(25, end) infinite,
+        cursorBlink .7s step-end infinite;
+}
+
+
+/* =========================
+   MODEL GRID
+========================= */
+
+.model-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+
+/* =========================
+   MODEL CARD
+========================= */
+
+.model-card {
+    display: block;
+    text-decoration: none;
+    color: white;
+    overflow: hidden;
+
+    border: 1px solid #23465d;
+    background: #0b1824;
+
+    transition:
+        transform .5s ease,
+        border-color .5s ease,
+        box-shadow .5s ease;
+
+    animation: appear .8s ease forwards;
+}
+
+.model-card:hover {
+    transform: translateY(-8px);
+
+    border-color: #78d5ff;
+
+    box-shadow:
+        0 0 30px rgba(80,190,240,.22);
+}
+
+
+/* =========================
+   THUMBNAIL
+========================= */
+
+.model-card img {
+    width: 100%;
+    display: block;
+
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center 25%;
+
+    transition:
+        transform .6s ease;
+}
+
+.model-card:hover img {
+    transform: scale(1.04);
+}
+
+
+/* =========================
+   CARD INFO
+========================= */
+
+.card-info {
+    padding: 20px;
+}
+
+.number {
+    color: #6fc8f5;
+    font-size: 10px;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    color: #d6f3ff;
+    font-size: 17px;
+    line-height: 1.5;
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 8px rgba(100,210,255,.35);
+}
+
+.watch {
+    display: inline-block;
+
+    margin-top: 16px;
+    padding: 10px 15px;
+
+    border: 1px solid #557b91;
+    color: #a9c8d8;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    transition: .3s;
+}
+
+.model-card:hover .watch {
+    background: #65c9f5;
+    border-color: #65c9f5;
+    color: #06121b;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    border-top: 1px solid #19384d;
+
+    text-align: center;
+
+    padding: 45px;
+
+    color: #466174;
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes appear {
+
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes typingLoop {
+
+    0% {
+        width: 0;
+    }
+
+    40% {
+        width: 100%;
+    }
+
+    60% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+
+}
+
+@keyframes jillTyping {
+
+    0% {
+        width: 0;
+    }
+
+    40% {
+        width: 100%;
+    }
+
+    60% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+
+}
+
+@keyframes cursorBlink {
+
+    50% {
+        border-color: transparent;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    .content {
+        width: 92%;
+    }
+
+    .model-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .music-button {
+        top: 65px;
+        right: 20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     ARCHIVE LOADING SCREEN
+========================= -->
+
+<div id="archiveLoader">
+
+    <div class="archive-loader-label">
+        RESIDENT EVIL 3 REMAKE
+    </div>
+
+    <div class="archive-loader-title">
+        LOADING ARCHIVE
+    </div>
+
+    <div class="archive-loader-percentage">
+
+        <span id="loadingPercentage">0</span>%
+
+    </div>
+
+    <div class="archive-loader-line">
+
+        <div
+            class="archive-loader-progress"
+            id="archiveProgress">
+        </div>
+
+    </div>
+
+    <div
+        class="archive-loader-status"
+        id="loadingStatus">
+
+        INITIALIZING SYSTEM
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio
+    id="bgMusic"
+    src="music.mp3"
+    loop
+    preload="auto">
+</audio>
+
+
+<!-- =========================
+     MUSIC BUTTON
+========================= -->
+
+<button
+    class="music-button"
+    id="musicButton"
+    type="button"
+>
+    ♫ MUSIC: OFF
+</button>
+
+
+<!-- =========================
+     BACK
+========================= -->
+
+<a
+    href="jillre3.html"
+    class="back"
+>
+    ← BACK TO RE3
+</a>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="small-title">
+        RESIDENT EVIL 3 REMAKE
+    </div>
+
+    <h1>
+        JILL VALENTINE
+    </h1>
+
+    <div class="subtitle">
+        MODEL VIEWER
+    </div>
+
+    <div class="credit">
+        Credits : Nexus Entertainment
+    </div>
+
+</header>
+
+
+<!-- =========================
+     CONTENT
+========================= -->
+
+<main class="content">
+
+    <h2 class="section-title">
+        MODEL VIEWER
+    </h2>
+
+
+    <div class="model-grid">
+
+
+        <!-- MODEL 1 -->
+
+        <a
+            class="model-card"
+            href="https://www.youtube.com/watch?v=KgUeQ6lP248"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+
+            <img
+                src="images/jill%20valentine.jpg"
+                alt="Jill Valentine Default Model"
+            >
+
+            <div class="card-info">
+
+                <div class="number">
+                    01 / MODEL
+                </div>
+
+                <div class="card-title">
+                    RESIDENT EVIL 3 REMAKE —
+                    JILL'S DEFAULT
+                    [BONUS MODEL WITH ROTATION]
+                </div>
+
+                <div class="watch">
+                    WATCH ON YOUTUBE →
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <!-- MODEL 2 -->
+
+        <a
+            class="model-card"
+            href="https://www.youtube.com/watch?v=yVW5kMwjcVc"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+
+            <img
+                src="images/jill%20valentine.jpg"
+                alt="Jill Valentine Classic Outfit Model"
+            >
+
+            <div class="card-info">
+
+                <div class="number">
+                    02 / MODEL
+                </div>
+
+                <div class="card-title">
+                    RESIDENT EVIL 3 REMAKE —
+                    JILL VALENTINE CLASSIC OUTFIT
+                    [BONUS MODEL WITH ROTATION]
+                </div>
+
+                <div class="watch">
+                    WATCH ON YOUTUBE →
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <!-- MODEL 3 -->
+
+        <a
+            class="model-card"
+            href="https://www.youtube.com/watch?v=Irkva4GjDYU"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+
+            <img
+                src="images/jill%20valentine.jpg"
+                alt="Jill Valentine Infected Model"
+            >
+
+            <div class="card-info">
+
+                <div class="number">
+                    03 / MODEL
+                </div>
+
+                <div class="card-title">
+                    RESIDENT EVIL 3 REMAKE —
+                    JILL INFECTED
+                    [BONUS MODEL WITH ROTATION]
+                </div>
+
+                <div class="watch">
+                    WATCH ON YOUTUBE →
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <!-- MODEL 4 -->
+
+        <a
+            class="model-card"
+            href="https://www.youtube.com/watch?v=Ju1WbLdQ3vQ"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+
+            <img
+                src="images/jill%20valentine.jpg"
+                alt="Jill Valentine S.T.A.R.S. Gear Model"
+            >
+
+            <div class="card-info">
+
+                <div class="number">
+                    04 / MODEL
+                </div>
+
+                <div class="card-title">
+                    RESIDENT EVIL 3 REMAKE —
+                    JILL S.T.A.R.S. GEAR
+                    [BONUS MODEL WITH ROTATION]
+                </div>
+
+                <div class="watch">
+                    WATCH ON YOUTUBE →
+                </div>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    BIOHAZARD: HEROINES —
+    JILL VALENTINE / RE3 REMAKE
+
+</footer>
+
+
+<script>
+
+
+/* =========================
+   ARCHIVE LOADING SCREEN
+========================= */
+
+const archiveLoader =
+    document.getElementById(
+        "archiveLoader"
+    );
+
+const archiveProgress =
+    document.getElementById(
+        "archiveProgress"
+    );
+
+const loadingPercentage =
+    document.getElementById(
+        "loadingPercentage"
+    );
+
+const loadingStatus =
+    document.getElementById(
+        "loadingStatus"
+    );
+
+let loadingValue = 0;
+
+
+const loadingStatuses = [
+
+    {
+        percent: 15,
+        text: "INITIALIZING SYSTEM"
+    },
+
+    {
+        percent: 35,
+        text: "ACCESSING ARCHIVE"
+    },
+
+    {
+        percent: 55,
+        text: "LOADING MODEL DATA"
+    },
+
+    {
+        percent: 75,
+        text: "VERIFYING DATA"
+    },
+
+    {
+        percent: 90,
+        text: "PREPARING VIEWER"
+    },
+
+    {
+        percent: 100,
+        text: "ARCHIVE READY"
+    }
+
+];
+
+
+const loadingInterval =
+    setInterval(function() {
+
+        loadingValue++;
+
+        loadingPercentage.textContent =
+            loadingValue;
+
+        archiveProgress.style.width =
+            loadingValue + "%";
+
+
+        for (
+            let i = loadingStatuses.length - 1;
+            i >= 0;
+            i--
+        ) {
+
+            if (
+                loadingValue >=
+                loadingStatuses[i].percent
+            ) {
+
+                loadingStatus.textContent =
+                    loadingStatuses[i].text;
+
+                break;
+
+            }
+
+        }
+
+
+        if (loadingValue >= 100) {
+
+            clearInterval(
+                loadingInterval
+            );
+
+            setTimeout(function() {
+
+                archiveLoader.classList.add(
+                    "hidden"
+                );
+
+            }, 450);
+
+        }
+
+    }, 25);
+
+
+/* =========================
+   MUSIC
+========================= */
+
+const music =
+    document.getElementById("bgMusic");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+music.volume = 0.35;
+
+
+musicButton.addEventListener(
+    "click",
+    function(event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (music.paused) {
+
+            music.play().then(function() {
+
+                musicButton.textContent =
+                    "♫ MUSIC: ON";
+
+                musicButton.classList.add(
+                    "active"
+                );
+
+            }).catch(function() {
+
+                musicButton.textContent =
+                    "♫ MUSIC: ERROR";
+
+            });
+
+        } else {
+
+            music.pause();
+
+            musicButton.textContent =
+                "♫ MUSIC: OFF";
+
+            musicButton.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   FIRST INTERACTION
+========================= */
+
+function startMusic() {
+
+    music.play().then(function() {
+
+        musicButton.textContent =
+            "♫ MUSIC: ON";
+
+        musicButton.classList.add(
+            "active"
+        );
+
+    }).catch(function() {
+
+        musicButton.textContent =
+            "♫ MUSIC: OFF";
+
+    });
+
+    document.removeEventListener(
+        "click",
+        startMusic
+    );
+
+    document.removeEventListener(
+        "keydown",
+        startMusic
+    );
+
+}
+
+document.addEventListener(
+    "click",
+    startMusic
+);
+
+document.addEventListener(
+    "keydown",
+    startMusic
+);
+
+
+/* =========================
+   MUSIC ERROR
+========================= */
+
+music.addEventListener(
+    "error",
+    function() {
+
+        musicButton.textContent =
+            "♫ MUSIC: ERROR";
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ada Wong | Biohazard: Heroines</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #050505;
+    color: white;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   MUSIC BUTTON
+========================= */
+
+.music-button {
+
+    position: fixed;
+
+    top: 25px;
+    right: 30px;
+
+    z-index: 9999;
+
+    background: rgba(0,0,0,.75);
+
+    color: #aaa;
+
+    border: 1px solid #333;
+
+    padding: 12px 18px;
+
+    font-family:
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+
+    box-shadow:
+        0 0 15px rgba(0,0,0,.5);
+}
+
+.music-button:hover {
+
+    color: white;
+
+    border-color: #d71920;
+
+    background: #120608;
+
+    box-shadow:
+        0 0 20px rgba(215,25,32,.35);
+}
+
+.music-button.playing {
+
+    color: #d71920;
+
+    border-color: #d71920;
+
+    text-shadow:
+        0 0 10px rgba(215,25,32,.7);
+
+    box-shadow:
+        0 0 20px rgba(215,25,32,.25);
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back {
+
+    position: fixed;
+
+    top: 25px;
+    left: 30px;
+
+    color: #777;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    z-index: 10;
+
+    transition: .3s;
+}
+
+.back:hover {
+
+    color: #d71920;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+
+    text-align: center;
+
+    padding: 105px 20px 55px;
+
+    border-bottom: 1px solid #242424;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(130, 0, 15, .16),
+            transparent 65%
+        );
+}
+
+.small-title {
+
+    color: #777;
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================
+   ADA TITLE
+========================= */
+
+h1 {
+
+    font-size: clamp(50px, 8vw, 90px);
+
+    letter-spacing: 5px;
+
+    color: white;
+}
+
+h1 span {
+
+    color: #d71920;
+
+    text-shadow:
+        0 0 12px rgba(215,25,32,.6);
+}
+
+.subtitle {
+
+    color: #777;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    margin-top: 18px;
+}
+
+
+/* =========================
+   OPTIONS
+========================= */
+
+.options {
+
+    width: 86%;
+
+    max-width: 1000px;
+
+    margin: 70px auto 100px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 25px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.option {
+
+    position: relative;
+
+    height: 500px;
+
+    overflow: hidden;
+
+    display: block;
+
+    text-decoration: none;
+
+    color: white;
+
+    border: 1px solid #252525;
+
+    background: #111;
+
+    transition:
+        transform .5s ease,
+        border-color .5s ease,
+        box-shadow .5s ease;
+
+    animation:
+        appear .8s ease forwards;
+}
+
+.option:nth-child(2) {
+
+    animation-delay: .2s;
+}
+
+
+/* =========================
+   CARD IMAGE
+========================= */
+
+.option img {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform .7s ease;
+}
+
+.option:hover img {
+
+    transform: scale(1.07);
+}
+
+
+/* =========================
+   DARK OVERLAY
+========================= */
+
+.option::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.96),
+            rgba(0,0,0,.12)
+        );
+}
+
+
+/* =========================
+   HOVER
+========================= */
+
+.option:hover {
+
+    transform: translateY(-8px);
+
+    border-color: #d71920;
+
+    box-shadow:
+        0 0 35px rgba(215,25,32,.25);
+}
+
+
+/* =========================
+   CARD TEXT
+========================= */
+
+.option-info {
+
+    position: absolute;
+
+    z-index: 2;
+
+    left: 28px;
+    right: 28px;
+    bottom: 28px;
+}
+
+.number {
+
+    color: #d71920;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 10px;
+}
+
+.option-title {
+
+    font-size: 28px;
+
+    letter-spacing: 3px;
+
+    font-weight: bold;
+}
+
+.option-description {
+
+    color: #aaa;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    margin-top: 8px;
+}
+
+.enter {
+
+    display: inline-block;
+
+    margin-top: 18px;
+
+    padding: 10px 16px;
+
+    border: 1px solid #666;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    transition: .3s;
+}
+
+.option:hover .enter {
+
+    background: #d71920;
+
+    border-color: #d71920;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+
+    border-top: 1px solid #1c1c1c;
+
+    text-align: center;
+
+    padding: 45px;
+
+    color: #444;
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================
+   CARD ANIMATION
+========================= */
+
+@keyframes appear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(35px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    .music-button {
+
+        top: 15px;
+
+        right: 15px;
+
+        padding: 10px 12px;
+
+        font-size: 8px;
+    }
+
+    .back {
+
+        top: 18px;
+
+        left: 18px;
+
+        font-size: 9px;
+    }
+
+    .options {
+
+        grid-template-columns: 1fr;
+
+        width: 92%;
+    }
+
+}
+
+
+/* =========================
+   MOBILE SMALL
+========================= */
+
+@media (max-width: 500px) {
+
+    .music-button {
+
+        top: 55px;
+
+        right: 15px;
+    }
+
+    header {
+
+        padding-top: 120px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio
+    id="backgroundMusic"
+    src="music.mp3"
+    loop
+    preload="auto">
+</audio>
+
+
+<button
+    id="musicButton"
+    class="music-button"
+    onclick="toggleMusic()"
+>
+    ♪ MUSIC OFF
+</button>
+
+
+<!-- =========================
+     BACK
+========================= -->
+
+<a
+    href="index.html"
+    class="back"
+>
+    ← BACK TO HEROINES
+</a>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="small-title">
+        BIOHAZARD: HEROINES
+    </div>
+
+    <h1>
+        ADA <span>WONG</span>
+    </h1>
+
+    <div class="subtitle">
+        RESIDENT EVIL ARCHIVE
+    </div>
+
+</header>
+
+
+<!-- =========================
+     OPTIONS
+========================= -->
+
+<main class="options">
+
+
+    <!-- =========================
+         RESIDENT EVIL 2 REMAKE
+    ========================= -->
+
+    <a
+        href="adare2.html"
+        class="option"
+    >
+
+        <img
+            src="images/adare2.jpg"
+            alt="Ada Wong RE2 Remake"
+        >
+
+        <div class="option-info">
+
+            <div class="number">
+                01 / GAME
+            </div>
+
+            <div class="option-title">
+                RESIDENT EVIL 2 REMAKE
+            </div>
+
+            <div class="option-description">
+                ADA WONG — RACCOON CITY INCIDENT
+            </div>
+
+            <div class="enter">
+                ENTER ARCHIVE →
+            </div>
+
+        </div>
+
+    </a>
+
+
+    <!-- =========================
+         RESIDENT EVIL 4 REMAKE
+    ========================= -->
+
+    <a
+        href="adare4.html"
+        class="option"
+    >
+
+        <img
+            src="images/adare4.jpg"
+            alt="Ada Wong RE4 Remake"
+        >
+
+        <div class="option-info">
+
+            <div class="number">
+                02 / GAME
+            </div>
+
+            <div class="option-title">
+                RESIDENT EVIL 4 REMAKE
+            </div>
+
+            <div class="option-description">
+                ADA WONG — LOS ILUMINADOS INCIDENT
+            </div>
+
+            <div class="enter">
+                ENTER ARCHIVE →
+            </div>
+
+        </div>
+
+    </a>
+
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    BIOHAZARD: HEROINES — ADA WONG
+
+</footer>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* =========================
+   MUSIC SYSTEM
+========================= */
+
+const music =
+    document.getElementById(
+        "backgroundMusic"
+    );
+
+const musicButton =
+    document.getElementById(
+        "musicButton"
+    );
+
+
+const savedTime =
+    localStorage.getItem(
+        "musicTime"
+    );
+
+const savedState =
+    localStorage.getItem(
+        "musicPlaying"
+    );
+
+
+/* =========================
+   RESTORE MUSIC POSITION
+========================= */
+
+if (savedTime !== null) {
+
+    music.addEventListener(
+        "loadedmetadata",
+        function() {
+
+            music.currentTime =
+                parseFloat(savedTime);
+
+        },
+        { once: true }
+    );
+
+}
+
+
+/* =========================
+   UPDATE BUTTON
+========================= */
+
+function updateMusicButton() {
+
+    if (!music.paused) {
+
+        musicButton.textContent =
+            "♪ MUSIC ON";
+
+        musicButton.classList.add(
+            "playing"
+        );
+
+    } else {
+
+        musicButton.textContent =
+            "♪ MUSIC OFF";
+
+        musicButton.classList.remove(
+            "playing"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   START MUSIC
+========================= */
+
+function startMusic() {
+
+    music.play()
+        .then(function() {
+
+            localStorage.setItem(
+                "musicPlaying",
+                "true"
+            );
+
+            updateMusicButton();
+
+        })
+        .catch(function() {
+
+            /*
+               Browser blocked autoplay.
+               The music button can still start it.
+            */
+
+        });
+
+}
+
+
+/* =========================
+   MUSIC BUTTON
+========================= */
+
+function toggleMusic() {
+
+    if (music.paused) {
+
+        startMusic();
+
+    } else {
+
+        music.pause();
+
+        localStorage.setItem(
+            "musicPlaying",
+            "false"
+        );
+
+        updateMusicButton();
+
+    }
+
+}
+
+
+/* =========================
+   SAVE CURRENT POSITION
+========================= */
+
+setInterval(function() {
+
+    if (!music.paused) {
+
+        localStorage.setItem(
+            "musicTime",
+            music.currentTime
+        );
+
+    }
+
+}, 1000);
+
+
+/* =========================
+   SAVE BEFORE LEAVING
+========================= */
+
+window.addEventListener(
+    "beforeunload",
+    function() {
+
+        if (!music.paused) {
+
+            localStorage.setItem(
+                "musicTime",
+                music.currentTime
+            );
+
+            localStorage.setItem(
+                "musicPlaying",
+                "true"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   RESUME MUSIC
+========================= */
+
+if (savedState === "true") {
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            startMusic();
+
+        }
+    );
+
+}
+
+
+/* =========================
+   FIRST CLICK FALLBACK
+========================= */
+
+document.addEventListener(
+    "click",
+    function startMusicOnFirstClick() {
+
+        if (
+            savedState === "true" &&
+            music.paused
+        ) {
+
+            startMusic();
+
+        }
+
+    },
+    { once: true }
+);
+
+
+/* Set correct button state */
+
+updateMusicButton();
+
+
+</script>
+
+
+</body>
+
+</html>

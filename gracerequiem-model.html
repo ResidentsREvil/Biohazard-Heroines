@@ -1,0 +1,980 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Grace Ashcroft — Model Viewer</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #050505;
+    color: white;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   ARCHIVE LOADING SCREEN
+========================= */
+
+#archiveLoader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: #050505;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+#archiveLoader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.archive-loader-label {
+    color: #666;
+
+    font-size: 9px;
+    letter-spacing: 5px;
+
+    margin-bottom: 18px;
+}
+
+.archive-loader-title {
+    color: #9b6a4a;
+
+    font-size: 25px;
+    letter-spacing: 6px;
+
+    text-shadow:
+        0 0 15px rgba(155,106,74,.5),
+        0 0 35px rgba(155,106,74,.2);
+}
+
+.archive-loader-percentage {
+    margin-top: 20px;
+
+    color: #aaa;
+
+    font-size: 11px;
+    letter-spacing: 4px;
+
+    min-width: 50px;
+
+    text-align: center;
+}
+
+.archive-loader-line {
+    width: 260px;
+    height: 1px;
+
+    margin-top: 20px;
+
+    background: #292929;
+
+    overflow: hidden;
+}
+
+.archive-loader-progress {
+    width: 0;
+    height: 100%;
+
+    background: #9b6a4a;
+
+    box-shadow:
+        0 0 12px rgba(155,106,74,.8);
+}
+
+.archive-loader-status {
+    margin-top: 16px;
+
+    color: #444;
+
+    font-size: 8px;
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back {
+    position: fixed;
+    top: 25px;
+    left: 30px;
+
+    color: #777;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    letter-spacing: 3px;
+
+    z-index: 20;
+
+    transition: .3s;
+}
+
+.back:hover {
+    color: #9b6a4a;
+}
+
+
+/* =========================
+   MUSIC
+========================= */
+
+#musicButton {
+    position: fixed;
+
+    top: 22px;
+    right: 30px;
+
+    z-index: 20;
+
+    background: #080808;
+
+    color: #777;
+
+    border: 1px solid #444;
+
+    padding: 10px 16px;
+
+    font-family: "Trebuchet MS", Arial, sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+#musicButton:hover,
+#musicButton.active {
+    color: #9b6a4a;
+
+    border-color: #9b6a4a;
+
+    box-shadow:
+        0 0 15px rgba(155,106,74,.25);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    text-align: center;
+
+    padding: 105px 20px 55px;
+
+    border-bottom: 1px solid #242424;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(120,75,45,.17),
+            transparent 65%
+        );
+}
+
+.small-title {
+    color: #777;
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================
+   ANIMATED TITLE
+========================= */
+
+h1 {
+    display: inline-block;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    width: 0;
+
+    border-right: 3px solid #9b6a4a;
+
+    color: #9b6a4a;
+
+    font-size: clamp(45px, 7vw, 80px);
+
+    letter-spacing: 5px;
+
+    text-shadow:
+        0 0 10px rgba(155,106,74,.55);
+
+    animation:
+        graceTyping 5s steps(14, end) infinite,
+        cursorBlink .7s step-end infinite;
+}
+
+
+/* =========================
+   CREDIT
+========================= */
+
+.credit {
+    color: #9b6a4a;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    margin-top: 18px;
+
+    text-shadow:
+        0 0 8px rgba(155,106,74,.25);
+}
+
+
+/* =========================
+   SUBTITLE
+========================= */
+
+.subtitle {
+    color: #777;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    margin-top: 12px;
+}
+
+
+/* =========================
+   MODEL SECTION
+========================= */
+
+.model-section {
+    width: 86%;
+
+    max-width: 1000px;
+
+    margin: 70px auto 100px;
+
+    text-align: center;
+}
+
+.model-label {
+    color: #9b6a4a;
+
+    font-size: 10px;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 15px;
+}
+
+.model-title {
+    font-size: 28px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 35px;
+}
+
+
+/* =========================
+   CLICKABLE GRACE IMAGE
+========================= */
+
+.model-link {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+
+    max-width: 900px;
+
+    height: 500px;
+
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    border: 1px solid #333;
+
+    background: #111;
+
+    text-decoration: none;
+
+    color: white;
+
+    box-shadow:
+        0 0 40px rgba(0,0,0,.8);
+
+    transition:
+        transform .5s ease,
+        border-color .5s ease,
+        box-shadow .5s ease;
+}
+
+
+/* IMPORTANT:
+   Prevent browser visited-link purple
+*/
+
+.model-link:link,
+.model-link:visited,
+.model-link:hover,
+.model-link:active {
+    color: white;
+    text-decoration: none;
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.model-link img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform .7s ease;
+}
+
+
+/* =========================
+   IMAGE OVERLAY
+========================= */
+
+.model-link::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.95),
+            rgba(0,0,0,.05)
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================
+   HOVER
+========================= */
+
+.model-link:hover {
+    transform: translateY(-8px);
+
+    border-color: #9b6a4a;
+
+    box-shadow:
+        0 0 40px rgba(155,106,74,.3);
+}
+
+.model-link:hover img {
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   IMAGE TEXT
+========================= */
+
+.model-overlay {
+    position: absolute;
+
+    z-index: 3;
+
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+
+    text-align: left;
+}
+
+
+/* ARCHIVE NUMBER */
+
+.model-number {
+    color: #9b6a4a;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 10px;
+}
+
+
+/* GRACE NAME
+   FORCED WHITE
+*/
+
+.model-name {
+    font-size: 28px;
+
+    letter-spacing: 4px;
+
+    font-weight: bold;
+
+    color: white !important;
+
+    text-decoration: none !important;
+}
+
+
+/* YOUTUBE BUTTON */
+
+.model-open {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 11px 17px;
+
+    border: 1px solid #666;
+
+    color: #aaa !important;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    text-decoration: none;
+
+    transition: .3s;
+}
+
+.model-link:hover .model-open {
+    color: white !important;
+
+    background: #9b6a4a;
+
+    border-color: #9b6a4a;
+
+    box-shadow:
+        0 0 20px rgba(155,106,74,.25);
+}
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.description {
+    max-width: 700px;
+
+    margin: 30px auto 0;
+
+    color: #888;
+
+    font-family: Georgia, serif;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    border-top: 1px solid #1c1c1c;
+
+    text-align: center;
+
+    padding: 45px;
+
+    color: #444;
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================
+   TYPEWRITER
+========================= */
+
+@keyframes graceTyping {
+
+    0% {
+        width: 0;
+    }
+
+    40% {
+        width: 100%;
+    }
+
+    60% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+
+}
+
+
+/* =========================
+   CURSOR
+========================= */
+
+@keyframes cursorBlink {
+
+    50% {
+        border-color: transparent;
+    }
+
+}
+
+
+/* =========================
+   LOADING / FADE
+========================= */
+
+@keyframes loaderPulse {
+
+    50% {
+        opacity: .7;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    #musicButton {
+        top: 70px;
+        right: 20px;
+    }
+
+    .back {
+        left: 20px;
+    }
+
+    .model-section {
+        width: 92%;
+    }
+
+    .model-link {
+        height: 400px;
+    }
+
+    .model-name {
+        font-size: 22px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     ARCHIVE LOADING SCREEN
+========================= -->
+
+<div id="archiveLoader">
+
+    <div class="archive-loader-label">
+        RESIDENT EVIL REQUIEM
+    </div>
+
+    <div class="archive-loader-title">
+        LOADING ARCHIVE
+    </div>
+
+    <div class="archive-loader-percentage">
+
+        <span id="loadingPercentage">
+            0
+        </span>%
+
+    </div>
+
+    <div class="archive-loader-line">
+
+        <div
+            class="archive-loader-progress"
+            id="archiveProgress"
+        ></div>
+
+    </div>
+
+    <div
+        class="archive-loader-status"
+        id="loadingStatus"
+    >
+        INITIALIZING SYSTEM
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio
+    id="bgMusic"
+    src="music.mp3"
+    loop
+    preload="auto">
+</audio>
+
+
+<!-- =========================
+     BACK
+========================= -->
+
+<a
+    href="grace.html"
+    class="back"
+>
+    ← BACK TO GRACE
+</a>
+
+
+<!-- =========================
+     MUSIC BUTTON
+========================= -->
+
+<button
+    id="musicButton"
+    type="button"
+>
+    ♫ MUSIC: OFF
+</button>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="small-title">
+        RESIDENT EVIL REQUIEM
+    </div>
+
+
+    <h1>
+        GRACE ASHCROFT
+    </h1>
+
+
+    <div class="credit">
+        Credits : Salty
+    </div>
+
+
+    <div class="subtitle">
+        CHARACTER MODEL VIEWER
+    </div>
+
+</header>
+
+
+<!-- =========================
+     MODEL
+========================= -->
+
+<main class="model-section">
+
+    <div class="model-label">
+        02 / ARCHIVE
+    </div>
+
+
+    <div class="model-title">
+        CHARACTER MODEL
+    </div>
+
+
+    <!--
+        CLICKING THE IMAGE
+        OPENS YOUTUBE IN A NEW TAB
+    -->
+
+    <a
+        class="model-link"
+        href="https://youtu.be/hRPY4UOF0Pg"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+
+        <img
+            src="images/grace.jpg"
+            alt="Grace Ashcroft Character Model"
+        >
+
+
+        <div class="model-overlay">
+
+            <div class="model-number">
+                01 / MODEL
+            </div>
+
+
+            <div class="model-name">
+                GRACE ASHCROFT
+            </div>
+
+
+            <div class="model-open">
+                WATCH MODEL ON YOUTUBE →
+            </div>
+
+        </div>
+
+    </a>
+
+
+    <div class="description">
+
+        Grace Ashcroft — Resident Evil Requiem character model.
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    BIOHAZARD: HEROINES —
+    GRACE ASHCROFT / MODEL VIEWER
+
+</footer>
+
+
+<script>
+
+
+/* =========================
+   ARCHIVE LOADING SCREEN
+========================= */
+
+const archiveLoader =
+    document.getElementById("archiveLoader");
+
+const archiveProgress =
+    document.getElementById("archiveProgress");
+
+const loadingPercentage =
+    document.getElementById("loadingPercentage");
+
+const loadingStatus =
+    document.getElementById("loadingStatus");
+
+
+let loadingValue = 0;
+
+
+const loadingStatuses = [
+
+    {
+        percent: 15,
+        text: "INITIALIZING SYSTEM"
+    },
+
+    {
+        percent: 35,
+        text: "ACCESSING ARCHIVE"
+    },
+
+    {
+        percent: 55,
+        text: "LOADING MODEL DATA"
+    },
+
+    {
+        percent: 75,
+        text: "VERIFYING DATA"
+    },
+
+    {
+        percent: 90,
+        text: "PREPARING VIEWER"
+    },
+
+    {
+        percent: 100,
+        text: "ARCHIVE READY"
+    }
+
+];
+
+
+const loadingInterval =
+    setInterval(function() {
+
+        loadingValue++;
+
+        loadingPercentage.textContent =
+            loadingValue;
+
+        archiveProgress.style.width =
+            loadingValue + "%";
+
+
+        for (
+            let i = loadingStatuses.length - 1;
+            i >= 0;
+            i--
+        ) {
+
+            if (
+                loadingValue >=
+                loadingStatuses[i].percent
+            ) {
+
+                loadingStatus.textContent =
+                    loadingStatuses[i].text;
+
+                break;
+
+            }
+
+        }
+
+
+        if (loadingValue >= 100) {
+
+            clearInterval(loadingInterval);
+
+
+            setTimeout(function() {
+
+                archiveLoader.classList.add("hidden");
+
+            }, 450);
+
+        }
+
+    }, 25);
+
+
+/* =========================
+   MUSIC
+========================= */
+
+const music =
+    document.getElementById("bgMusic");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+
+music.volume = 0.35;
+
+
+musicButton.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        if (music.paused) {
+
+            music.play()
+                .then(function() {
+
+                    musicButton.textContent =
+                        "♫ MUSIC: ON";
+
+                    musicButton.classList.add(
+                        "active"
+                    );
+
+                })
+                .catch(function() {
+
+                    musicButton.textContent =
+                        "♫ MUSIC: ERROR";
+
+                });
+
+        } else {
+
+            music.pause();
+
+            musicButton.textContent =
+                "♫ MUSIC: OFF";
+
+            musicButton.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
+```

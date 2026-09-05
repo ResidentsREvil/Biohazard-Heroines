@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Jill Valentine | Biohazard: Heroines</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #07131f;
+    color: white;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+
+/* BACK */
+
+.back {
+    position: fixed;
+    top: 25px;
+    left: 30px;
+
+    color: #7895a8;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    z-index: 20;
+
+    transition: .3s;
+}
+
+.back:hover {
+    color: #8ddcff;
+}
+
+
+/* MUSIC BUTTON */
+
+#musicButton {
+    position: fixed;
+
+    top: 22px;
+    right: 25px;
+
+    z-index: 50;
+
+    background: #07131f;
+
+    color: #7895a8;
+
+    border: 1px solid #35576b;
+
+    padding: 10px 16px;
+
+    font-family: "Trebuchet MS", Arial, sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+#musicButton:hover {
+    color: #8ddcff;
+
+    border-color: #8ddcff;
+
+    box-shadow:
+        0 0 15px rgba(100, 210, 255, .25);
+}
+
+#musicButton.active {
+    color: #8ddcff;
+
+    border-color: #8ddcff;
+
+    box-shadow:
+        0 0 15px rgba(100, 210, 255, .2);
+}
+
+
+/* HEADER */
+
+header {
+    text-align: center;
+
+    padding: 105px 20px 55px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(70, 150, 210, .12),
+            transparent 65%
+        );
+
+    border-bottom: 1px solid #19384d;
+}
+
+
+.small-title {
+    color: #66899f;
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 18px;
+}
+
+
+/* TITLE */
+
+.jill-typewriter {
+    display: inline-block;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    width: 0;
+
+    border-right: 3px solid #8ddcff;
+
+    font-size: clamp(45px, 7vw, 85px);
+
+    letter-spacing: 5px;
+
+    color: #b9e8ff;
+
+    text-shadow:
+        0 0 10px rgba(100, 200, 255, .5),
+        0 0 25px rgba(70, 170, 230, .25);
+
+    animation:
+        jillTyping 5s steps(20, end) infinite,
+        cursorBlink .7s step-end infinite;
+}
+
+
+.subtitle {
+    color: #66899f;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    margin-top: 18px;
+}
+
+
+/* MAIN */
+
+.container {
+    width: 86%;
+
+    max-width: 1100px;
+
+    margin: 80px auto 100px;
+}
+
+
+/* RE3 CARD */
+
+.game-card {
+    position: relative;
+
+    display: block;
+
+    height: 500px;
+
+    overflow: hidden;
+
+    text-decoration: none;
+
+    color: white;
+
+    border: 1px solid #23465d;
+
+    background: #0b1824;
+
+    animation: appear 1s ease forwards;
+
+    transition:
+        transform .5s ease,
+        border-color .5s ease,
+        box-shadow .5s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-8px);
+
+    border-color: #78d5ff;
+
+    box-shadow:
+        0 0 35px rgba(80, 190, 240, .25);
+}
+
+
+/* CARD IMAGE */
+
+.game-card img {
+    position: absolute;
+
+    width: 100%;
+
+    height: 100%;
+
+    left: 0;
+
+    top: 0;
+
+    object-fit: cover;
+
+    transition:
+        transform .7s ease;
+}
+
+.game-card:hover img {
+    transform: scale(1.07);
+}
+
+
+/* OVERLAY */
+
+.game-card::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(2, 9, 15, .96),
+            rgba(2, 9, 15, .12)
+        );
+
+    pointer-events: none;
+}
+
+
+/* CARD TEXT */
+
+.card-info {
+    position: absolute;
+
+    z-index: 2;
+
+    left: 35px;
+
+    right: 35px;
+
+    bottom: 35px;
+}
+
+.number {
+    color: #6fc8f5;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 38px;
+
+    letter-spacing: 4px;
+
+    color: #d6f3ff;
+
+    text-shadow:
+        0 0 12px rgba(100, 210, 255, .45);
+}
+
+.card-description {
+    color: #9db2bf;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    margin-top: 10px;
+}
+
+.enter {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 11px 18px;
+
+    border: 1px solid #557b91;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    transition: .3s;
+}
+
+.game-card:hover .enter {
+    background: #65c9f5;
+
+    border-color: #65c9f5;
+
+    color: #06121b;
+}
+
+
+/* FOOTER */
+
+footer {
+    border-top: 1px solid #19384d;
+
+    text-align: center;
+
+    padding: 45px;
+
+    color: #466174;
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+}
+
+
+/* ANIMATION */
+
+@keyframes appear {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+
+}
+
+
+@keyframes jillTyping {
+
+    0% {
+        width: 0;
+    }
+
+    40% {
+        width: 100%;
+    }
+
+    60% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+
+}
+
+
+@keyframes cursorBlink {
+
+    50% {
+        border-color: transparent;
+    }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+    .container {
+        width: 92%;
+    }
+
+    .game-card {
+        height: 420px;
+    }
+
+    #musicButton {
+        top: 65px;
+        right: 20px;
+    }
+
+    .back {
+        left: 20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- MUSIC -->
+
+<audio
+    id="bgMusic"
+    src="music.mp3"
+    loop
+    preload="auto">
+</audio>
+
+
+<!-- MUSIC BUTTON -->
+
+<button
+    id="musicButton"
+    type="button"
+>
+    ♫ MUSIC: OFF
+</button>
+
+
+<!-- BACK -->
+
+<a
+    href="index.html"
+    class="back"
+>
+    ← BACK TO HEROINES
+</a>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="small-title">
+        BIOHAZARD: HEROINES
+    </div>
+
+    <h1 class="jill-typewriter">
+        JILL VALENTINE
+    </h1>
+
+    <div class="subtitle">
+        CHARACTER ARCHIVE
+    </div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+    <a
+        href="jillre3.html"
+        class="game-card"
+    >
+
+        <img
+            src="images/jill%20valentine.jpg"
+            alt="Jill Valentine Resident Evil 3 Remake"
+        >
+
+        <div class="card-info">
+
+            <div class="number">
+                01 / GAME
+            </div>
+
+            <div class="card-title">
+                RESIDENT EVIL 3 REMAKE
+            </div>
+
+            <div class="card-description">
+                JILL VALENTINE — CHARACTER ARCHIVE
+            </div>
+
+            <div class="enter">
+                ENTER ARCHIVE →
+            </div>
+
+        </div>
+
+    </a>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    BIOHAZARD: HEROINES — JILL VALENTINE
+
+</footer>
+
+
+<script>
+
+/* =========================
+   MUSIC
+========================= */
+
+const music =
+    document.getElementById("bgMusic");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+
+music.volume = 0.35;
+
+
+musicButton.addEventListener("click", function() {
+
+    if (music.paused) {
+
+        music.play()
+        .then(function() {
+
+            musicButton.textContent =
+                "♫ MUSIC: ON";
+
+            musicButton.classList.add(
+                "active"
+            );
+
+        })
+        .catch(function() {
+
+            musicButton.textContent =
+                "♫ MUSIC ERROR";
+
+        });
+
+    } else {
+
+        music.pause();
+
+        musicButton.textContent =
+            "♫ MUSIC: OFF";
+
+        musicButton.classList.remove(
+            "active"
+        );
+
+    }
+
+});
+
+
+/* KEYBOARD SHORTCUT */
+
+document.addEventListener("keydown", function(event) {
+
+    if (
+        event.key.toLowerCase() === "m"
+    ) {
+
+        musicButton.click();
+
+    }
+
+});
+
+</script>
+
+
+</body>
+
+</html>

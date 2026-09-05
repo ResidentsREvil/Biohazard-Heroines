@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ada Wong | RE4 Remake Wallpapers</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #050505;
+    color: white;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   LOADING SCREEN
+========================= */
+
+#archiveLoader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: #050505;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+#archiveLoader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.archive-loader-label {
+    color: #666;
+    font-size: 9px;
+    letter-spacing: 5px;
+    margin-bottom: 18px;
+}
+
+.archive-loader-title {
+    color: #d71920;
+    font-size: 25px;
+    letter-spacing: 6px;
+
+    text-shadow:
+        0 0 15px rgba(215,25,32,.5),
+        0 0 35px rgba(215,25,32,.2);
+}
+
+.archive-loader-percentage {
+    margin-top: 20px;
+    color: #aaa;
+    font-size: 11px;
+    letter-spacing: 4px;
+    min-width: 50px;
+    text-align: center;
+}
+
+.archive-loader-line {
+    width: 260px;
+    height: 1px;
+    margin-top: 20px;
+    background: #292929;
+    overflow: hidden;
+}
+
+.archive-loader-progress {
+    width: 0;
+    height: 100%;
+    background: #d71920;
+
+    box-shadow:
+        0 0 12px rgba(215,25,32,.8);
+}
+
+.archive-loader-status {
+    margin-top: 16px;
+    color: #444;
+    font-size: 8px;
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   MUSIC BUTTON
+========================= */
+
+.music-button {
+    position: fixed;
+    top: 25px;
+    right: 30px;
+
+    z-index: 9999;
+
+    background: rgba(0,0,0,.75);
+
+    color: #aaa;
+
+    border: 1px solid #333;
+
+    padding: 12px 18px;
+
+    font-family:
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.music-button:hover {
+    color: white;
+
+    border-color: #d71920;
+
+    background: #120608;
+
+    box-shadow:
+        0 0 20px rgba(215,25,32,.35);
+}
+
+.music-button.playing {
+    color: #d71920;
+
+    border-color: #d71920;
+
+    text-shadow:
+        0 0 10px rgba(215,25,32,.7);
+
+    box-shadow:
+        0 0 20px rgba(215,25,32,.25);
+}
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back {
+    position: fixed;
+
+    top: 25px;
+    left: 30px;
+
+    color: #777;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    letter-spacing: 3px;
+
+    z-index: 20;
+
+    transition: .3s;
+}
+
+.back:hover {
+    color: #d71920;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    text-align: center;
+
+    padding: 105px 20px 55px;
+
+    border-bottom: 1px solid #242424;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(130, 0, 15, .17),
+            transparent 65%
+        );
+}
+
+.small-title {
+    color: #777;
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================
+   TYPEWRITER
+========================= */
+
+h1 {
+    display: inline-block;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    width: 0;
+
+    border-right: 3px solid #d71920;
+
+    font-size: clamp(40px, 6vw, 70px);
+
+    letter-spacing: 5px;
+
+    color: #d71920;
+
+    text-shadow:
+        0 0 10px rgba(215,25,32,.5);
+
+    animation:
+        typing 5s steps(18, end) infinite,
+        cursorBlink .7s step-end infinite;
+}
+
+.subtitle {
+    color: #777;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    margin-top: 18px;
+}
+
+
+/* =========================
+   WALLPAPER ARCHIVE
+========================= */
+
+.wallpaper-archive {
+    width: 88%;
+    max-width: 1200px;
+
+    margin: 60px auto 100px;
+
+    position: relative;
+}
+
+
+/* =========================
+   MAIN WALLPAPER
+========================= */
+
+.main-wallpaper {
+    position: relative;
+
+    width: 100%;
+
+    background: #090909;
+
+    border: 1px solid #252525;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    min-height: 500px;
+}
+
+#mainWallpaper {
+    width: 100%;
+
+    max-height: 700px;
+
+    object-fit: contain;
+
+    display: block;
+
+    transition:
+        opacity .25s ease;
+
+    cursor: zoom-in;
+}
+
+
+/* =========================
+   ARROWS
+========================= */
+
+.archive-arrow {
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 58px;
+    height: 80px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,.72);
+
+    border: 1px solid #333;
+
+    color: #888;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    z-index: 5;
+
+    transition: .3s ease;
+}
+
+.archive-arrow:hover {
+    color: #d71920;
+
+    border-color: #d71920;
+
+    background: rgba(20,0,3,.85);
+
+    box-shadow:
+        0 0 20px rgba(215,25,32,.3);
+}
+
+#prevArrow {
+    left: 20px;
+}
+
+#nextArrow {
+    right: 20px;
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.wallpaper-info {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 18px;
+
+    padding: 0 5px;
+}
+
+.wallpaper-label {
+    color: #777;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+}
+
+.wallpaper-counter {
+    color: #d71920;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================
+   THUMBNAILS
+========================= */
+
+.thumbnail-container {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+
+    flex-wrap: wrap;
+}
+
+.thumbnail {
+    width: 130px;
+    height: 75px;
+
+    object-fit: cover;
+
+    border: 1px solid #333;
+
+    opacity: .45;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.thumbnail:hover {
+    opacity: .8;
+
+    border-color: #777;
+}
+
+.thumbnail.active {
+    opacity: 1;
+
+    border-color: #d71920;
+
+    box-shadow:
+        0 0 12px rgba(215,25,32,.35);
+}
+
+
+/* =========================
+   FULLSCREEN VIEWER
+========================= */
+
+#imageViewer {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.97);
+
+    z-index: 20000;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+#largeImage {
+    max-width: 90%;
+    max-height: 88vh;
+
+    object-fit: contain;
+
+    transition:
+        opacity .2s ease;
+}
+
+
+/* =========================
+   FULLSCREEN CLOSE
+========================= */
+
+.close-viewer {
+    position: absolute;
+
+    top: 25px;
+    right: 30px;
+
+    color: #777;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    z-index: 5;
+
+    transition: .3s;
+}
+
+.close-viewer:hover {
+    color: #d71920;
+}
+
+
+/* =========================
+   FULLSCREEN ARROWS
+========================= */
+
+.fullscreen-arrow {
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 55px;
+    height: 75px;
+
+    background: rgba(0,0,0,.65);
+
+    border: 1px solid #333;
+
+    color: #888;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    z-index: 5;
+
+    transition: .3s;
+}
+
+.fullscreen-arrow:hover {
+    color: #d71920;
+
+    border-color: #d71920;
+
+    box-shadow:
+        0 0 20px rgba(215,25,32,.3);
+}
+
+#fullscreenPrev {
+    left: 25px;
+}
+
+#fullscreenNext {
+    right: 25px;
+}
+
+
+/* =========================
+   FULLSCREEN COUNTER
+========================= */
+
+.fullscreen-counter {
+    position: absolute;
+
+    top: 28px;
+    left: 30px;
+
+    color: #d71920;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    z-index: 5;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    border-top: 1px solid #1c1c1c;
+
+    text-align: center;
+
+    padding: 45px;
+
+    color: #444;
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes typing {
+
+    0% {
+        width: 0;
+    }
+
+    40% {
+        width: 100%;
+    }
+
+    60% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+
+}
+
+@keyframes cursorBlink {
+
+    50% {
+        border-color: transparent;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .wallpaper-archive {
+        width: 92%;
+    }
+
+    .main-wallpaper {
+        min-height: 350px;
+    }
+
+    .thumbnail {
+        width: 90px;
+        height: 55px;
+    }
+
+    .archive-arrow {
+        width: 45px;
+        height: 60px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     LOADING SCREEN
+========================= -->
+
+<div id="archiveLoader">
+
+    <div class="archive-loader-label">
+        RESIDENT EVIL 4 REMAKE
+    </div>
+
+    <div class="archive-loader-title">
+        LOADING ARCHIVE
+    </div>
+
+    <div class="archive-loader-percentage">
+        <span id="loadingPercentage">0</span>%
+    </div>
+
+    <div class="archive-loader-line">
+
+        <div
+            class="archive-loader-progress"
+            id="archiveProgress">
+        </div>
+
+    </div>
+
+    <div
+        class="archive-loader-status"
+        id="loadingStatus">
+
+        INITIALIZING SYSTEM
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio
+    id="backgroundMusic"
+    src="music.mp3"
+    loop
+    preload="auto">
+</audio>
+
+
+<button
+    id="musicButton"
+    class="music-button"
+    onclick="toggleMusic()"
+>
+    ♪ MUSIC OFF
+</button>
+
+
+<!-- =========================
+     BACK
+========================= -->
+
+<a
+    href="adare4.html"
+    class="back"
+>
+    ← BACK TO RE4
+</a>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="small-title">
+        RESIDENT EVIL 4 REMAKE
+    </div>
+
+    <h1>
+        ADA WONG
+    </h1>
+
+    <div class="subtitle">
+        WALLPAPERS
+    </div>
+
+</header>
+
+
+<!-- =========================
+     DEFAULT WALLPAPER VIEWER
+========================= -->
+
+<main class="wallpaper-archive">
+
+
+    <div class="main-wallpaper">
+
+
+        <button
+            class="archive-arrow"
+            id="prevArrow"
+            onclick="previousWallpaper()"
+        >
+            ←
+        </button>
+
+
+        <img
+            id="mainWallpaper"
+            src="wallpaperre4/Resident%20Evil%204%20Remake%20Wallpaper.jpg"
+            alt="Resident Evil 4 Remake Wallpaper"
+            onclick="openFullscreen()"
+        >
+
+
+        <button
+            class="archive-arrow"
+            id="nextArrow"
+            onclick="nextWallpaper()"
+        >
+            →
+        </button>
+
+
+    </div>
+
+
+    <div class="wallpaper-info">
+
+        <div class="wallpaper-label">
+            ADA WONG / RE4 REMAKE
+        </div>
+
+        <div
+            class="wallpaper-counter"
+            id="wallpaperCounter"
+        >
+            01 / 03
+        </div>
+
+    </div>
+
+
+    <!-- THUMBNAILS -->
+
+    <div class="thumbnail-container">
+
+
+        <img
+            class="thumbnail active"
+            src="wallpaperre4/Resident%20Evil%204%20Remake%20Wallpaper.jpg"
+            onclick="showWallpaper(0)"
+            alt="Resident Evil 4 Remake Wallpaper"
+        >
+
+
+        <img
+            class="thumbnail"
+            src="wallpaperre4/Resident%20Evil%204%20PS4%20e%20PS5.jpg"
+            onclick="showWallpaper(1)"
+            alt="Resident Evil 4 PS4 and PS5 Wallpaper"
+        >
+
+
+        <img
+            class="thumbnail"
+            src="wallpaperre4/Ada%20Wong%20Separate%20Ways%20Cover.jpg"
+            onclick="showWallpaper(2)"
+            alt="Ada Wong Separate Ways Cover"
+        >
+
+
+    </div>
+
+
+</main>
+
+
+<!-- =========================
+     FULLSCREEN VIEWER
+========================= -->
+
+<div id="imageViewer">
+
+
+    <div
+        class="fullscreen-counter"
+        id="fullscreenCounter"
+    >
+        01 / 03
+    </div>
+
+
+    <div
+        class="close-viewer"
+        onclick="closeFullscreen()"
+    >
+        ×
+    </div>
+
+
+    <button
+        class="fullscreen-arrow"
+        id="fullscreenPrev"
+        onclick="fullscreenPrevious(event)"
+    >
+        ←
+    </button>
+
+
+    <img
+        id="largeImage"
+        src="wallpaperre4/Resident%20Evil%204%20Remake%20Wallpaper.jpg"
+        alt="Wallpaper"
+    >
+
+
+    <button
+        class="fullscreen-arrow"
+        id="fullscreenNext"
+        onclick="fullscreenNext(event)"
+    >
+        →
+    </button>
+
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    BIOHAZARD: HEROINES — ADA WONG / RE4 REMAKE
+
+</footer>
+
+
+<script>
+
+
+/* =========================
+   WALLPAPER DATA
+========================= */
+
+const wallpapers = [
+
+    "wallpaperre4/Resident%20Evil%204%20Remake%20Wallpaper.jpg",
+
+    "wallpaperre4/Resident%20Evil%204%20PS4%20e%20PS5.jpg",
+
+    "wallpaperre4/Ada%20Wong%20Separate%20Ways%20Cover.jpg"
+
+];
+
+
+let currentWallpaper = 0;
+
+
+/* =========================
+   SHOW WALLPAPER
+========================= */
+
+function showWallpaper(index) {
+
+    currentWallpaper = index;
+
+    const mainWallpaper =
+        document.getElementById(
+            "mainWallpaper"
+        );
+
+    const thumbnails =
+        document.querySelectorAll(
+            ".thumbnail"
+        );
+
+    const counter =
+        document.getElementById(
+            "wallpaperCounter"
+        );
+
+    const fullscreenCounter =
+        document.getElementById(
+            "fullscreenCounter"
+        );
+
+
+    mainWallpaper.style.opacity = "0";
+
+
+    setTimeout(function() {
+
+        mainWallpaper.src =
+            wallpapers[currentWallpaper];
+
+        mainWallpaper.style.opacity = "1";
+
+    }, 120);
+
+
+    thumbnails.forEach(function(
+        thumbnail,
+        thumbnailIndex
+    ) {
+
+        thumbnail.classList.toggle(
+            "active",
+            thumbnailIndex === currentWallpaper
+        );
+
+    });
+
+
+    const number =
+        String(currentWallpaper + 1)
+        .padStart(2, "0");
+
+
+    counter.textContent =
+        number + " / 03";
+
+
+    fullscreenCounter.textContent =
+        number + " / 03";
+
+}
+
+
+/* =========================
+   NEXT WALLPAPER
+========================= */
+
+function nextWallpaper() {
+
+    currentWallpaper++;
+
+    if (
+        currentWallpaper >=
+        wallpapers.length
+    ) {
+
+        currentWallpaper = 0;
+
+    }
+
+    showWallpaper(currentWallpaper);
+
+}
+
+
+/* =========================
+   PREVIOUS WALLPAPER
+========================= */
+
+function previousWallpaper() {
+
+    currentWallpaper--;
+
+    if (currentWallpaper < 0) {
+
+        currentWallpaper =
+            wallpapers.length - 1;
+
+    }
+
+    showWallpaper(currentWallpaper);
+
+}
+
+
+/* =========================
+   FULLSCREEN
+========================= */
+
+function openFullscreen() {
+
+    const viewer =
+        document.getElementById(
+            "imageViewer"
+        );
+
+    const largeImage =
+        document.getElementById(
+            "largeImage"
+        );
+
+
+    largeImage.src =
+        wallpapers[currentWallpaper];
+
+
+    viewer.style.display =
+        "flex";
+
+}
+
+
+function closeFullscreen() {
+
+    document.getElementById(
+        "imageViewer"
+    ).style.display = "none";
+
+}
+
+
+/* =========================
+   FULLSCREEN NEXT
+========================= */
+
+function fullscreenNext(event) {
+
+    if (event) {
+
+        event.stopPropagation();
+
+    }
+
+    currentWallpaper++;
+
+    if (
+        currentWallpaper >=
+        wallpapers.length
+    ) {
+
+        currentWallpaper = 0;
+
+    }
+
+    showWallpaper(currentWallpaper);
+
+
+    document.getElementById(
+        "largeImage"
+    ).src =
+        wallpapers[currentWallpaper];
+
+}
+
+
+/* =========================
+   FULLSCREEN PREVIOUS
+========================= */
+
+function fullscreenPrevious(event) {
+
+    if (event) {
+
+        event.stopPropagation();
+
+    }
+
+    currentWallpaper--;
+
+    if (currentWallpaper < 0) {
+
+        currentWallpaper =
+            wallpapers.length - 1;
+
+    }
+
+    showWallpaper(currentWallpaper);
+
+
+    document.getElementById(
+        "largeImage"
+    ).src =
+        wallpapers[currentWallpaper];
+
+}
+
+
+/* =========================
+   KEYBOARD CONTROLS
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        const viewer =
+            document.getElementById(
+                "imageViewer"
+            );
+
+
+        if (
+            viewer.style.display === "flex"
+        ) {
+
+            if (
+                event.key === "ArrowRight"
+            ) {
+
+                fullscreenNext();
+
+            }
+
+
+            if (
+                event.key === "ArrowLeft"
+            ) {
+
+                fullscreenPrevious();
+
+            }
+
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeFullscreen();
+
+            }
+
+        } else {
+
+            if (
+                event.key === "ArrowRight"
+            ) {
+
+                nextWallpaper();
+
+            }
+
+
+            if (
+                event.key === "ArrowLeft"
+            ) {
+
+                previousWallpaper();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================
+   LOADING SCREEN
+========================= */
+
+const archiveLoader =
+    document.getElementById(
+        "archiveLoader"
+    );
+
+const archiveProgress =
+    document.getElementById(
+        "archiveProgress"
+    );
+
+const loadingPercentage =
+    document.getElementById(
+        "loadingPercentage"
+    );
+
+const loadingStatus =
+    document.getElementById(
+        "loadingStatus"
+    );
+
+
+let loadingValue = 0;
+
+
+const loadingStatuses = [
+
+    {
+        percent: 15,
+        text: "INITIALIZING SYSTEM"
+    },
+
+    {
+        percent: 35,
+        text: "ACCESSING ARCHIVE"
+    },
+
+    {
+        percent: 55,
+        text: "LOADING WALLPAPERS"
+    },
+
+    {
+        percent: 75,
+        text: "VERIFYING DATA"
+    },
+
+    {
+        percent: 90,
+        text: "PREPARING ARCHIVE"
+    },
+
+    {
+        percent: 100,
+        text: "ARCHIVE READY"
+    }
+
+];
+
+
+const loadingInterval =
+    setInterval(function() {
+
+        loadingValue++;
+
+        loadingPercentage.textContent =
+            loadingValue;
+
+        archiveProgress.style.width =
+            loadingValue + "%";
+
+
+        for (
+            let i = loadingStatuses.length - 1;
+            i >= 0;
+            i--
+        ) {
+
+            if (
+                loadingValue >=
+                loadingStatuses[i].percent
+            ) {
+
+                loadingStatus.textContent =
+                    loadingStatuses[i].text;
+
+                break;
+
+            }
+
+        }
+
+
+        if (loadingValue >= 100) {
+
+            clearInterval(
+                loadingInterval
+            );
+
+            setTimeout(function() {
+
+                archiveLoader.classList.add(
+                    "hidden"
+                );
+
+            }, 450);
+
+        }
+
+    }, 25);
+
+
+/* =========================
+   MUSIC
+========================= */
+
+const music =
+    document.getElementById(
+        "backgroundMusic"
+    );
+
+const musicButton =
+    document.getElementById(
+        "musicButton"
+    );
+
+
+/* Add music if needed */
+
+if (!music) {
+
+    const audio =
+        document.createElement("audio");
+
+    audio.id = "backgroundMusic";
+
+    audio.src = "music.mp3";
+
+    audio.loop = true;
+
+    audio.preload = "auto";
+
+    document.body.appendChild(audio);
+
+}
+
+
+const backgroundMusic =
+    document.getElementById(
+        "backgroundMusic"
+    );
+
+
+const savedTime =
+    localStorage.getItem(
+        "musicTime"
+    );
+
+const savedState =
+    localStorage.getItem(
+        "musicPlaying"
+    );
+
+
+if (savedTime !== null) {
+
+    backgroundMusic.addEventListener(
+        "loadedmetadata",
+        function() {
+
+            try {
+
+                backgroundMusic.currentTime =
+                    parseFloat(savedTime);
+
+            } catch (error) {}
+
+        },
+        { once: true }
+    );
+
+}
+
+
+function updateMusicButton() {
+
+    if (!backgroundMusic.paused) {
+
+        musicButton.textContent =
+            "♪ MUSIC ON";
+
+        musicButton.classList.add(
+            "playing"
+        );
+
+    } else {
+
+        musicButton.textContent =
+            "♪ MUSIC OFF";
+
+        musicButton.classList.remove(
+            "playing"
+        );
+
+    }
+
+}
+
+
+function startMusic() {
+
+    backgroundMusic.play()
+        .then(function() {
+
+            localStorage.setItem(
+                "musicPlaying",
+                "true"
+            );
+
+            updateMusicButton();
+
+        })
+        .catch(function() {});
+
+}
+
+
+function toggleMusic() {
+
+    if (backgroundMusic.paused) {
+
+        startMusic();
+
+    } else {
+
+        backgroundMusic.pause();
+
+        localStorage.setItem(
+            "musicPlaying",
+            "false"
+        );
+
+        updateMusicButton();
+
+    }
+
+}
+
+
+setInterval(function() {
+
+    if (!backgroundMusic.paused) {
+
+        localStorage.setItem(
+            "musicTime",
+            backgroundMusic.currentTime
+        );
+
+    }
+
+}, 1000);
+
+
+window.addEventListener(
+    "beforeunload",
+    function() {
+
+        localStorage.setItem(
+            "musicTime",
+            backgroundMusic.currentTime
+        );
+
+        localStorage.setItem(
+            "musicPlaying",
+            backgroundMusic.paused
+                ? "false"
+                : "true"
+        );
+
+    }
+);
+
+
+if (savedState === "true") {
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            startMusic();
+
+        }
+    );
+
+}
+
+
+document.addEventListener(
+    "click",
+    function() {
+
+        if (
+            savedState === "true" &&
+            backgroundMusic.paused
+        ) {
+
+            startMusic();
+
+        }
+
+    },
+    { once: true }
+);
+
+
+updateMusicButton();
+
+
+/* =========================
+   PRELOAD WALLPAPERS
+========================= */
+
+wallpapers.forEach(function(src) {
+
+    const image =
+        new Image();
+
+    image.src = src;
+
+});
+
+
+/* =========================
+   FIRST WALLPAPER
+========================= */
+
+showWallpaper(0);
+
+</script>
+
+
+</body>
+
+</html>

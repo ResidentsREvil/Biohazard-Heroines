@@ -1,0 +1,1623 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Grace Ashcroft — Pictures</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #050505;
+    color: white;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   ARCHIVE LOADING SCREEN
+========================= */
+
+#archiveLoader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: #050505;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+#archiveLoader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.archive-loader-label {
+    color: #666;
+
+    font-size: 9px;
+    letter-spacing: 5px;
+
+    margin-bottom: 18px;
+}
+
+.archive-loader-title {
+    color: #9b6a4a;
+
+    font-size: 25px;
+    letter-spacing: 6px;
+
+    text-shadow:
+        0 0 15px rgba(155,106,74,.5),
+        0 0 35px rgba(155,106,74,.2);
+}
+
+.archive-loader-percentage {
+    margin-top: 20px;
+
+    color: #aaa;
+
+    font-size: 11px;
+    letter-spacing: 4px;
+
+    min-width: 50px;
+
+    text-align: center;
+}
+
+.archive-loader-line {
+    width: 260px;
+    height: 1px;
+
+    margin-top: 20px;
+
+    background: #292929;
+
+    overflow: hidden;
+}
+
+.archive-loader-progress {
+    width: 0;
+    height: 100%;
+
+    background: #9b6a4a;
+
+    box-shadow:
+        0 0 12px rgba(155,106,74,.8);
+}
+
+.archive-loader-status {
+    margin-top: 16px;
+
+    color: #444;
+
+    font-size: 8px;
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back {
+    position: fixed;
+    top: 25px;
+    left: 30px;
+
+    color: #777;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    z-index: 100;
+
+    transition: .3s;
+}
+
+.back:hover {
+    color: #9b6a4a;
+}
+
+
+/* =========================
+   MUSIC BUTTON
+========================= */
+
+#musicButton {
+    position: fixed;
+
+    top: 22px;
+    right: 30px;
+
+    z-index: 100;
+
+    background: #080808;
+
+    color: #777;
+
+    border: 1px solid #444;
+
+    padding: 10px 16px;
+
+    font-family: "Trebuchet MS", Arial, sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+#musicButton:hover {
+    color: #9b6a4a;
+
+    border-color: #9b6a4a;
+
+    box-shadow:
+        0 0 15px rgba(155,106,74,.25);
+}
+
+#musicButton.active {
+    color: #9b6a4a;
+
+    border-color: #9b6a4a;
+
+    box-shadow:
+        0 0 15px rgba(155,106,74,.20);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    text-align: center;
+
+    padding: 105px 20px 55px;
+
+    border-bottom: 1px solid #242424;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(120,75,45,.17),
+            transparent 65%
+        );
+}
+
+.small-title {
+    color: #777;
+
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+h1 {
+    display: inline-block;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    width: 0;
+
+    border-right: 3px solid #9b6a4a;
+
+    font-size: clamp(38px, 7vw, 80px);
+
+    letter-spacing: 5px;
+
+    color: #9b6a4a;
+
+    text-shadow:
+        0 0 10px rgba(155,106,74,.55);
+
+    animation:
+        graceTyping
+        5s
+        steps(14, end)
+        infinite,
+
+        cursorBlink
+        .7s
+        step-end
+        infinite;
+}
+
+
+/* =========================
+   SUBTITLE
+========================= */
+
+.subtitle {
+    color: #777;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    margin-top: 18px;
+}
+
+
+/* =========================
+   GALLERY
+========================= */
+
+.gallery {
+    width: 90%;
+
+    max-width: 1150px;
+
+    margin: 65px auto 100px;
+
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+/* =========================
+   MAIN IMAGE AREA
+========================= */
+
+.main-image-container {
+    width: 100%;
+
+    height: min(68vh, 700px);
+
+    min-height: 400px;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #090909;
+
+    border: 1px solid #252525;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 0 50px rgba(0,0,0,.55);
+}
+
+
+/* =========================
+   MAIN IMAGE
+========================= */
+
+#mainImage {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    cursor: zoom-in;
+
+    transition:
+        opacity .25s ease,
+        transform .5s ease;
+}
+
+#mainImage:hover {
+    transform: scale(1.015);
+}
+
+
+/* =========================
+   ARROWS
+========================= */
+
+.gallery-arrow {
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 55px;
+
+    height: 90px;
+
+    border: 1px solid rgba(155,106,74,.35);
+
+    background: rgba(0,0,0,.65);
+
+    color: #aaa;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    z-index: 5;
+
+    transition:
+        .3s ease;
+}
+
+.gallery-arrow:hover {
+    color: #9b6a4a;
+
+    border-color: #9b6a4a;
+
+    background: rgba(10,10,10,.9);
+
+    box-shadow:
+        0 0 25px rgba(155,106,74,.20);
+}
+
+.gallery-arrow.left {
+    left: 18px;
+}
+
+.gallery-arrow.right {
+    right: 18px;
+}
+
+
+/* =========================
+   COUNTER
+========================= */
+
+.gallery-counter {
+    margin-top: 22px;
+
+    color: #777;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+}
+
+#currentImage {
+    color: #9b6a4a;
+}
+
+
+/* =========================
+   THUMBNAILS
+========================= */
+
+.thumbnails {
+    width: 100%;
+
+    margin-top: 25px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.thumbnail {
+    width: 95px;
+
+    height: 65px;
+
+    object-fit: cover;
+
+    border: 1px solid #292929;
+
+    opacity: .45;
+
+    cursor: pointer;
+
+    transition:
+        opacity .3s ease,
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+}
+
+.thumbnail:hover {
+    opacity: .8;
+
+    transform: translateY(-3px);
+
+    border-color: #9b6a4a;
+}
+
+.thumbnail.active {
+    opacity: 1;
+
+    border-color: #9b6a4a;
+
+    box-shadow:
+        0 0 15px rgba(155,106,74,.25);
+}
+
+
+/* =========================
+   FULLSCREEN VIEWER
+========================= */
+
+#imageViewer {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.96);
+
+    z-index: 200;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 40px;
+}
+
+#imageViewer.active {
+    display: flex;
+}
+
+#largeImage {
+    max-width: 95vw;
+
+    max-height: 90vh;
+
+    object-fit: contain;
+
+    box-shadow:
+        0 0 60px rgba(0,0,0,.8);
+}
+
+
+/* =========================
+   VIEWER CLOSE
+========================= */
+
+#closeViewer {
+    position: absolute;
+
+    top: 25px;
+
+    right: 30px;
+
+    width: 45px;
+
+    height: 45px;
+
+    border: 1px solid #444;
+
+    background: rgba(0,0,0,.7);
+
+    color: #aaa;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+#closeViewer:hover {
+    color: #9b6a4a;
+
+    border-color: #9b6a4a;
+}
+
+
+/* =========================
+   VIEWER ARROWS
+========================= */
+
+.viewer-arrow {
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 55px;
+
+    height: 80px;
+
+    background: rgba(0,0,0,.6);
+
+    border: 1px solid #333;
+
+    color: #aaa;
+
+    font-size: 30px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.viewer-arrow:hover {
+    color: #9b6a4a;
+
+    border-color: #9b6a4a;
+}
+
+.viewer-arrow.left {
+    left: 25px;
+}
+
+.viewer-arrow.right {
+    right: 25px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    border-top: 1px solid #1c1c1c;
+
+    text-align: center;
+
+    padding: 45px;
+
+    color: #444;
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================
+   TYPEWRITER
+========================= */
+
+@keyframes graceTyping {
+
+    0% {
+        width: 0;
+    }
+
+    40% {
+        width: 100%;
+    }
+
+    60% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+
+}
+
+
+/* =========================
+   CURSOR
+========================= */
+
+@keyframes cursorBlink {
+
+    50% {
+        border-color: transparent;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .main-image-container {
+        height: 55vh;
+
+        min-height: 300px;
+    }
+
+    .gallery-arrow {
+        width: 45px;
+
+        height: 70px;
+
+        font-size: 22px;
+    }
+
+    .gallery-arrow.left {
+        left: 10px;
+    }
+
+    .gallery-arrow.right {
+        right: 10px;
+    }
+
+    .thumbnail {
+        width: 75px;
+
+        height: 52px;
+    }
+
+    #imageViewer {
+        padding: 20px;
+    }
+
+    .viewer-arrow {
+        width: 42px;
+
+        height: 65px;
+
+        font-size: 24px;
+    }
+
+    .viewer-arrow.left {
+        left: 10px;
+    }
+
+    .viewer-arrow.right {
+        right: 10px;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    #musicButton {
+        top: 65px;
+
+        right: 20px;
+    }
+
+    .back {
+        left: 20px;
+    }
+
+    header {
+        padding-top: 120px;
+    }
+
+    h1 {
+        font-size: 34px;
+
+        letter-spacing: 3px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     ARCHIVE LOADING SCREEN
+========================= -->
+
+<div id="archiveLoader">
+
+    <div class="archive-loader-label">
+        RESIDENT EVIL REQUIEM
+    </div>
+
+    <div class="archive-loader-title">
+        LOADING ARCHIVE
+    </div>
+
+    <div class="archive-loader-percentage">
+        <span id="loadingPercentage">0</span>%
+    </div>
+
+    <div class="archive-loader-line">
+        <div
+            class="archive-loader-progress"
+            id="archiveProgress"
+        ></div>
+    </div>
+
+    <div
+        class="archive-loader-status"
+        id="loadingStatus"
+    >
+        INITIALIZING SYSTEM
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio
+    id="bgMusic"
+    src="music.mp3"
+    loop
+    preload="auto">
+</audio>
+
+
+<!-- =========================
+     BACK
+========================= -->
+
+<a
+    href="gracerequiem.html"
+    class="back"
+>
+
+    ← BACK TO GRACE
+
+</a>
+
+
+<!-- =========================
+     MUSIC BUTTON
+========================= -->
+
+<button
+    id="musicButton"
+    type="button"
+>
+
+    ♫ MUSIC: OFF
+
+</button>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="small-title">
+
+        RESIDENT EVIL REQUIEM
+
+    </div>
+
+
+    <h1>
+
+        GRACE ASHCROFT
+
+    </h1>
+
+
+    <div class="subtitle">
+
+        PICTURES / IMAGE ARCHIVE
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     GALLERY
+========================= -->
+
+<main class="gallery">
+
+
+    <div class="main-image-container">
+
+
+        <button
+            class="gallery-arrow left"
+            id="prevImage"
+            aria-label="Previous image"
+        >
+
+            ‹
+
+        </button>
+
+
+        <img
+            id="mainImage"
+            src="images/grace.jpg"
+            alt="Grace Ashcroft"
+        >
+
+
+        <button
+            class="gallery-arrow right"
+            id="nextImage"
+            aria-label="Next image"
+        >
+
+            ›
+
+        </button>
+
+
+    </div>
+
+
+    <!-- COUNTER -->
+
+    <div class="gallery-counter">
+
+        <span id="currentImage">01</span>
+        / 06
+
+    </div>
+
+
+    <!-- THUMBNAILS -->
+
+    <div class="thumbnails">
+
+
+        <img
+            class="thumbnail active"
+            src="images/grace.jpg"
+            data-index="0"
+            alt="Grace Ashcroft"
+        >
+
+
+        <img
+            class="thumbnail"
+            src="images/Grace%20Ashcroft%20icon.jpg"
+            data-index="1"
+            alt="Grace Ashcroft Icon"
+        >
+
+
+        <img
+            class="thumbnail"
+            src="images/g.jpg"
+            data-index="2"
+            alt="Grace Ashcroft"
+        >
+
+
+        <img
+            class="thumbnail"
+            src="images/df.jpg"
+            data-index="3"
+            alt="Grace Ashcroft"
+        >
+
+
+        <img
+            class="thumbnail"
+            src="images/%E2%98%BE.jpg"
+            data-index="4"
+            alt="Grace Ashcroft"
+        >
+
+
+        <img
+            class="thumbnail"
+            src="images/%E2%9C%A7.jpg"
+            data-index="5"
+            alt="Grace Ashcroft"
+        >
+
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     FULLSCREEN VIEWER
+========================= -->
+
+<div id="imageViewer">
+
+
+    <button
+        id="closeViewer"
+        type="button"
+        aria-label="Close fullscreen"
+    >
+
+        ×
+
+    </button>
+
+
+    <button
+        class="viewer-arrow left"
+        id="viewerPrev"
+        type="button"
+        aria-label="Previous image"
+    >
+
+        ‹
+
+    </button>
+
+
+    <img
+        id="largeImage"
+        src=""
+        alt="Grace Ashcroft"
+    >
+
+
+    <button
+        class="viewer-arrow right"
+        id="viewerNext"
+        type="button"
+        aria-label="Next image"
+    >
+
+        ›
+
+    </button>
+
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    BIOHAZARD: HEROINES —
+    GRACE ASHCROFT / PICTURES
+
+</footer>
+
+
+<script>
+
+/* =========================
+   ARCHIVE LOADING SCREEN
+========================= */
+
+const archiveLoader =
+    document.getElementById("archiveLoader");
+
+const archiveProgress =
+    document.getElementById("archiveProgress");
+
+const loadingPercentage =
+    document.getElementById("loadingPercentage");
+
+const loadingStatus =
+    document.getElementById("loadingStatus");
+
+
+let loadingValue = 0;
+
+
+const loadingStatuses = [
+
+    {
+        percent: 15,
+        text: "INITIALIZING SYSTEM"
+    },
+
+    {
+        percent: 35,
+        text: "ACCESSING ARCHIVE"
+    },
+
+    {
+        percent: 55,
+        text: "LOADING VISUAL FILES"
+    },
+
+    {
+        percent: 75,
+        text: "VERIFYING DATA"
+    },
+
+    {
+        percent: 90,
+        text: "PREPARING ARCHIVE"
+    },
+
+    {
+        percent: 100,
+        text: "ARCHIVE READY"
+    }
+
+];
+
+
+const loadingInterval =
+    setInterval(function() {
+
+        loadingValue++;
+
+        loadingPercentage.textContent =
+            loadingValue;
+
+        archiveProgress.style.width =
+            loadingValue + "%";
+
+
+        for (
+            let i = loadingStatuses.length - 1;
+            i >= 0;
+            i--
+        ) {
+
+            if (
+                loadingValue >=
+                loadingStatuses[i].percent
+            ) {
+
+                loadingStatus.textContent =
+                    loadingStatuses[i].text;
+
+                break;
+
+            }
+
+        }
+
+
+        if (loadingValue >= 100) {
+
+            clearInterval(loadingInterval);
+
+
+            setTimeout(function() {
+
+                archiveLoader.classList.add("hidden");
+
+            }, 450);
+
+        }
+
+    }, 25);
+
+
+/* =========================
+   IMAGE DATA
+========================= */
+
+const images = [
+
+    "images/grace.jpg",
+
+    "images/Grace%20Ashcroft%20icon.jpg",
+
+    "images/g.jpg",
+
+    "images/df.jpg",
+
+    "images/%E2%98%BE.jpg",
+
+    "images/%E2%9C%A7.jpg"
+
+];
+
+
+let currentIndex = 0;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const mainImage =
+    document.getElementById("mainImage");
+
+const currentImage =
+    document.getElementById("currentImage");
+
+const thumbnails =
+    document.querySelectorAll(".thumbnail");
+
+const prevImage =
+    document.getElementById("prevImage");
+
+const nextImage =
+    document.getElementById("nextImage");
+
+
+/* =========================
+   SHOW IMAGE
+========================= */
+
+function showImage(index) {
+
+    if (index < 0) {
+
+        index = images.length - 1;
+
+    }
+
+    if (index >= images.length) {
+
+        index = 0;
+
+    }
+
+
+    currentIndex = index;
+
+
+    mainImage.style.opacity = "0";
+
+
+    setTimeout(function() {
+
+        mainImage.src = images[currentIndex];
+
+        mainImage.style.opacity = "1";
+
+    }, 120);
+
+
+    currentImage.textContent =
+        String(currentIndex + 1).padStart(2, "0");
+
+
+    thumbnails.forEach(function(thumb, i) {
+
+        thumb.classList.toggle(
+            "active",
+            i === currentIndex
+        );
+
+    });
+
+}
+
+
+/* =========================
+   NEXT / PREVIOUS
+========================= */
+
+nextImage.addEventListener(
+    "click",
+    function() {
+
+        showImage(currentIndex + 1);
+
+    }
+);
+
+
+prevImage.addEventListener(
+    "click",
+    function() {
+
+        showImage(currentIndex - 1);
+
+    }
+);
+
+
+/* =========================
+   THUMBNAILS
+========================= */
+
+thumbnails.forEach(function(thumb) {
+
+    thumb.addEventListener(
+        "click",
+        function() {
+
+            showImage(
+                Number(
+                    this.dataset.index
+                )
+            );
+
+        }
+    );
+
+});
+
+
+/* =========================
+   FULLSCREEN
+========================= */
+
+const imageViewer =
+    document.getElementById("imageViewer");
+
+const largeImage =
+    document.getElementById("largeImage");
+
+const closeViewer =
+    document.getElementById("closeViewer");
+
+const viewerPrev =
+    document.getElementById("viewerPrev");
+
+const viewerNext =
+    document.getElementById("viewerNext");
+
+
+function openViewer() {
+
+    largeImage.src =
+        images[currentIndex];
+
+    imageViewer.classList.add("active");
+
+    history.pushState(
+        { viewer: true },
+        ""
+    );
+
+}
+
+
+function closeFullscreen() {
+
+    if (
+        imageViewer.classList.contains("active")
+    ) {
+
+        history.back();
+
+    }
+
+}
+
+
+mainImage.addEventListener(
+    "click",
+    openViewer
+);
+
+
+closeViewer.addEventListener(
+    "click",
+    closeFullscreen
+);
+
+
+imageViewer.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target === imageViewer
+        ) {
+
+            closeFullscreen();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   VIEWER IMAGE
+========================= */
+
+function updateViewer() {
+
+    largeImage.src =
+        images[currentIndex];
+
+}
+
+
+viewerNext.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        showImage(currentIndex + 1);
+
+        updateViewer();
+
+    }
+);
+
+
+viewerPrev.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        showImage(currentIndex - 1);
+
+        updateViewer();
+
+    }
+);
+
+
+/* =========================
+   BROWSER BACK
+========================= */
+
+window.addEventListener(
+    "popstate",
+    function() {
+
+        imageViewer.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+/* =========================
+   KEYBOARD CONTROLS
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            imageViewer.classList.contains("active")
+        ) {
+
+            if (event.key === "ArrowRight") {
+
+                showImage(currentIndex + 1);
+
+                updateViewer();
+
+            }
+
+
+            if (event.key === "ArrowLeft") {
+
+                showImage(currentIndex - 1);
+
+                updateViewer();
+
+            }
+
+
+            if (event.key === "Escape") {
+
+                closeFullscreen();
+
+            }
+
+            return;
+
+        }
+
+
+        if (event.key === "ArrowRight") {
+
+            showImage(currentIndex + 1);
+
+        }
+
+
+        if (event.key === "ArrowLeft") {
+
+            showImage(currentIndex - 1);
+
+        }
+
+    }
+);
+
+
+/* =========================
+   PRELOAD IMAGES
+========================= */
+
+images.forEach(function(src) {
+
+    const img = new Image();
+
+    img.src = src;
+
+});
+
+
+/* =========================
+   MUSIC
+========================= */
+
+const music =
+    document.getElementById("bgMusic");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+
+music.volume = 0.35;
+
+
+/* =========================
+   SAVED MUSIC TIME
+========================= */
+
+const savedTime =
+    localStorage.getItem("musicTime");
+
+
+if (savedTime) {
+
+    music.currentTime =
+        parseFloat(savedTime);
+
+}
+
+
+setInterval(function() {
+
+    if (!music.paused) {
+
+        localStorage.setItem(
+            "musicTime",
+            music.currentTime
+        );
+
+    }
+
+}, 1000);
+
+
+/* =========================
+   SAVED MUSIC STATE
+========================= */
+
+const savedPlaying =
+    localStorage.getItem("musicPlaying");
+
+
+if (savedPlaying === "true") {
+
+    music.play()
+        .then(function() {
+
+            musicButton.textContent =
+                "♫ MUSIC: ON";
+
+            musicButton.classList.add(
+                "active"
+            );
+
+        })
+        .catch(function() {
+
+            musicButton.textContent =
+                "♫ MUSIC: OFF";
+
+        });
+
+}
+
+
+/* =========================
+   MUSIC BUTTON
+========================= */
+
+musicButton.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+
+        if (music.paused) {
+
+            music.play()
+                .then(function() {
+
+                    musicButton.textContent =
+                        "♫ MUSIC: ON";
+
+                    musicButton.classList.add(
+                        "active"
+                    );
+
+                    localStorage.setItem(
+                        "musicPlaying",
+                        "true"
+                    );
+
+                })
+                .catch(function(error) {
+
+                    console.log(
+                        "Music error:",
+                        error
+                    );
+
+                    musicButton.textContent =
+                        "♫ MUSIC: ERROR";
+
+                });
+
+        } else {
+
+            music.pause();
+
+            musicButton.textContent =
+                "♫ MUSIC: OFF";
+
+            musicButton.classList.remove(
+                "active"
+            );
+
+            localStorage.setItem(
+                "musicPlaying",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   INITIAL IMAGE
+========================= */
+
+showImage(0);
+
+</script>
+
+
+</body>
+
+</html>
+```
